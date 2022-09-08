@@ -10,11 +10,15 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 public enum GuestType {
 
-    VISITANTE(1),
-    AVISO(2),
+    VISITOR(1, "VISITANTE"),
+    WARNING(2, "AVISO"),
+    BIRTHDAY(3, "ANIVERSÁRIO"),
+    PRAYER(4, "ORAÇÃO"),
+    PRESENTATION(5, "APRESENTAÇÃO")
     ;
 
     private int code;
+    private String desc;
 
     public static GuestType ofCode(Integer code){
         return Stream.of(values())

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Validated
@@ -30,7 +31,10 @@ public class GuestController {
 
     @GetMapping( value = "/find/{visitPeriod}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
-    public List<Guest> findGuests(@Valid @PathVariable( name = "visitPeriod" ) Integer visitPeriod){
-        return service.findAll( VisitPeriod.ofCode(visitPeriod) );
+    public List<GuestResponse> findGuests(@Valid @PathVariable( name = "visitPeriod" ) Integer visitPeriod){
+        return service.findAll( VisitPeriod.ofCode(visitPeriod) )
+                .stream()
+                .map(GuestMapper::toGuestResponse)
+                .collect(Collectors.toList());
     }
 }

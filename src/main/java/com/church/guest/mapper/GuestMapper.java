@@ -25,7 +25,11 @@ public class GuestMapper {
 
     public static GuestResponse toGuestResponse(Guest guest) {
         return guest != null ? GuestResponse.builder()
-                .create( guest.getCreatedDate() )
+                .id(guest.getId())
+                .guestType(guest.getGuestType().getDesc())
+                .name(guest.getName())
+                .message(guest.getMessage())
+                .visitPeriod(guest.getVisitPeriod().getDesc())
                 .build() : null ;
     }
 }

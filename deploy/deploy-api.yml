@@ -7,9 +7,9 @@ metadata:
 spec:
   containers:
   - name: guest-api
-    image: njaneto/guest-api:1
+    image: njaneto/guest-api:2
     ports:
     - containerPort: 8080
     env:
       - name: DATA_SOURCE_URL
-        value: mongodb://34.121.140.116:27017/guest
+        value: mongodb://localhost:27017/guest
