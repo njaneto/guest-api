@@ -1,6 +1,5 @@
 package com.church.guest.web;
 
-import com.church.guest.domain.Guest;
 import com.church.guest.enums.VisitPeriod;
 import com.church.guest.mapper.GuestMapper;
 import com.church.guest.service.GuestService;
