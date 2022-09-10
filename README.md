@@ -15,6 +15,7 @@ Requirements for the software and other tools to build, test and push
 - [Java](https://www.java.com/pt-BR/)
 - [Maven](https://maven.apache.org/)
 - [Mongo](https://hub.docker.com/_/mongo)
+- [Docker](https://www.docker.com/)
 - [Kubernetes](https://kubernetes.io/docs/home/) - optional
 
 ## Todo - 😅 👨‍💻
