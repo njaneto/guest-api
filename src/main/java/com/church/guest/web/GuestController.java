@@ -1,6 +1,5 @@
 package com.church.guest.web;
 
-import com.church.guest.enums.VisitPeriod;
 import com.church.guest.mapper.GuestMapper;
 import com.church.guest.service.GuestService;
 import com.church.guest.web.dto.GuestRequest;
@@ -28,12 +27,22 @@ public class GuestController {
         return GuestMapper.toGuestResponse( service.save( request ));
     }
 
-    @GetMapping( value = "/find/{visitPeriod}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping( value = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
-    public List<GuestResponse> findGuests(@Valid @PathVariable( name = "visitPeriod" ) Integer visitPeriod){
-        return service.findAll( VisitPeriod.ofCode(visitPeriod) )
+    public List<GuestResponse> findGuests(){
+        return service.findAll()
                 .stream()
                 .map(GuestMapper::toGuestResponse)
                 .collect(Collectors.toList());
     }
+
+    @DeleteMapping( value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    @CrossOrigin
+    public void delete(@Valid @PathVariable( name = "id" ) String id){
+        service.delete(id);
+    }
+
+
+
 }

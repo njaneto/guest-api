@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.church</groupId>
 	<artifactId>guest</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<name>guest</name>
 	<description>api for church guest </description>
 

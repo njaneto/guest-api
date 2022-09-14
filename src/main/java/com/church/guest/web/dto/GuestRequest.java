@@ -20,8 +20,5 @@ public class GuestRequest {
     @NotNull
     @Min(1)
     private Integer guestType;
-    @NotNull
-    @Min(1)
-    private Integer visitPeriod;
 
 }

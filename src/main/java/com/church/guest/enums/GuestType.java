@@ -11,10 +11,11 @@ import java.util.stream.Stream;
 public enum GuestType {
 
     VISITOR(1, "VISITANTE"),
-    WARNING(2, "AVISO"),
+    WARNING(2, "AVISO/RECADO"),
     BIRTHDAY(3, "ANIVERSÁRIO"),
-    PRAYER(4, "ORAÇÃO"),
-    PRESENTATION(5, "APRESENTAÇÃO")
+    BIRTHDAY_WEDDING(4, "ANIVERSÁRIO CASAMENTO"),
+    PRAYER(5, "ORAÇÃO"),
+    PRESENTATION(6, "APRESENTAÇÃO")
     ;
 
     private int code;

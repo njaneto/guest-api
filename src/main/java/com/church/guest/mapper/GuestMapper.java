@@ -2,7 +2,6 @@ package com.church.guest.mapper;
 
 import com.church.guest.domain.Guest;
 import com.church.guest.enums.GuestType;
-import com.church.guest.enums.VisitPeriod;
 import com.church.guest.web.dto.GuestRequest;
 import com.church.guest.web.dto.GuestResponse;
 import lombok.AccessLevel;
@@ -19,7 +18,6 @@ public class GuestMapper {
                 .name(request.getName())
                 .message(request.getMessage())
                 .createdDate(LocalDateTime.now())
-                .visitPeriod(VisitPeriod.ofCode(request.getVisitPeriod()))
                 .build() : null ;
     }
 
@@ -29,7 +27,7 @@ public class GuestMapper {
                 .guestType(guest.getGuestType().getDesc())
                 .name(guest.getName())
                 .message(guest.getMessage())
-                .visitPeriod(guest.getVisitPeriod().getDesc())
+                .createdDate(guest.getCreatedDate().toString())
                 .build() : null ;
     }
 }
