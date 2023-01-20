@@ -12,5 +12,6 @@ public class GuestResponse {
     private String name;
     private String message;
     private String guestType;
-    private String visitPeriod;
+    private String createdDate;
+
 }

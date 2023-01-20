@@ -12,3 +12,15 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+token:
+  secret: ${JWT_SECRET}
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG

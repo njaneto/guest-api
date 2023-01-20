@@ -1,9 +1,7 @@
 package com.church.guest.domain;
 
 import com.church.guest.enums.GuestType;
-import com.church.guest.enums.VisitPeriod;
 import com.church.guest.repository.converters.GuestTypeConverter;
-import com.church.guest.repository.converters.VisitPeriodConverter;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -27,13 +25,10 @@ public class Guest {
 
     private String message;
 
-    @CreatedDate
+    @CreatedDate()
     private LocalDateTime createdDate;
 
     @Convert(converter = GuestTypeConverter.class)
     private GuestType guestType;
-
-    @Convert(converter = VisitPeriodConverter.class)
-    private VisitPeriod visitPeriod;
 
 }
