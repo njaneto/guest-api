@@ -23,10 +23,9 @@ Requirements for the software and other tools to build, test and push
 - [x] Initial work - 🥳
 - [X] Dockerfile - 🥹
 - [X] Kubernetes - 😝
-- [ ] JWT - 🫣
+- [X] JWT - 🫣
 - [ ] Test units - 😏
 - [ ] Integration test - 🤓
-- [ ] Evolution - 👀
 
 ## Running the tests
 
