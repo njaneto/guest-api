@@ -8,22 +8,19 @@ import java.util.stream.Stream;
 
 @Getter
 @AllArgsConstructor
-public enum GuestType {
-
-    VISITOR(1, "VISITANTE"),
-    WARNING(2, "AVISO/RECADO"),
-    BIRTHDAY(3, "ANIVERSÁRIO"),
-    PRAYER(4, "ORAÇÃO"),
-    PRESENTATION(5, "APRESENTAÇÃO")
+public enum BirthdayType {
+    WEDDING(1, "CASAMENTO"),
+    LIFE(2, "VIDA"),
     ;
 
     private final int code;
     private final String desc;
 
-    public static GuestType ofCode(Integer code){
+    public static BirthdayType ofCode(Integer code){
         return Stream.of(values())
                 .filter( guestType -> Objects.equals(guestType.code, code))
                 .findAny()
                 .orElse(null);
     }
+
 }

@@ -1,10 +1,15 @@
 package com.church.guest.web.dto;
 
 
-import lombok.*;
+import com.church.guest.domain.Person;
+import com.church.guest.domain.Prayer;
+import com.church.guest.domain.Presentation;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 
@@ -14,11 +19,12 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class GuestRequest {
 
-    @NotBlank
-    private String name;
-    private String message;
     @NotNull
     @Min(1)
     private Integer guestType;
+    private Person person;
+    private Prayer prayer;
+    private Presentation presentation;
+    private String message;
 
 }
