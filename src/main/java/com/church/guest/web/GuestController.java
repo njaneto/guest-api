@@ -4,6 +4,7 @@ import com.church.guest.web.dto.GuestRequest;
 import com.church.guest.web.dto.GuestResponse;
 import com.church.guest.mapper.GuestMapper;
 import com.church.guest.service.GuestService;
+import com.church.guest.web.dto.Guests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,14 +39,24 @@ public class GuestController {
         return GuestMapper.toGuestResponse(service.editGuest(id, request));
     }
 
+    @PutMapping(value = "/announced/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    @Secured("ROLE_USER_WRITER")
+    public GuestResponse announcedGuest(@Valid @PathVariable(name = "id") String id) {
+        return GuestMapper.toGuestResponse(service.announcedGuest(id));
+    }
+
     @GetMapping(value = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     @Secured("ROLE_USER_READ")
-    public List<GuestResponse> findGuests() {
-        return service.findAll()
+    public Guests findGuests() {
+
+        final List<GuestResponse> responses = service.findAll()
                 .stream()
                 .map(GuestMapper::toGuestResponse)
                 .collect(Collectors.toList());
+
+        return GuestMapper.toGuestResponses(responses);
     }
 
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

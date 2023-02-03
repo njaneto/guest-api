@@ -7,7 +7,7 @@ import javax.persistence.Converter;
 import java.util.Optional;
 
 @Converter(autoApply = true)
-public class GuestTypeConverter  implements AttributeConverter<GuestType, Integer> {
+public class GuestTypeConverter implements AttributeConverter<GuestType, Integer> {
     @Override
     public Integer convertToDatabaseColumn(GuestType attribute) {
         return Optional.ofNullable(attribute)

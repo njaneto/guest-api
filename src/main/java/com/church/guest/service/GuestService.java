@@ -30,10 +30,9 @@ public class GuestService {
 
     public List<Guest> findAll() {
         Calendar cal = Calendar.getInstance();
-        ;
         cal.add(Calendar.HOUR, -5);
 
-        return repository.findByCreatedDateAfter(cal.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+        return repository.findByCreatedDateAfterAndAnnouncedFalse(cal.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
                 .stream()
                 .sorted(Comparator.comparing(Guest::getGuestType))
                 .collect(Collectors.toList());
@@ -57,5 +56,16 @@ public class GuestService {
         if (repository.findById(id).isEmpty()) {
             throw new RuntimeException("Guest not fund");
         }
+    }
+
+    public Guest announcedGuest(String id) {
+
+        checkGuestExist(id);
+
+        Guest guest = repository.findById(id).orElseThrow();
+        guest.setAnnounced(Boolean.TRUE);
+
+        return repository.save(guest);
+
     }
 }

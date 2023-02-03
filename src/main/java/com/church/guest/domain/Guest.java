@@ -21,14 +21,16 @@ public class Guest {
     @Id
     private String id;
 
-    private String name;
-
-    private String message;
-
     @CreatedDate()
     private LocalDateTime createdDate;
 
     @Convert(converter = GuestTypeConverter.class)
     private GuestType guestType;
+
+    private Person person;
+    private Prayer prayer;
+    private Presentation presentation;
+    private String message;
+    private Boolean announced;
 
 }

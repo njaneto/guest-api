@@ -12,3 +12,4 @@ FROM --platform=linux/amd64 openjdk:11
 COPY --from=builder /app/target/guest-*.jar /guest.jar
 
 CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/guest.jar"]
+EXPOSE 8080
