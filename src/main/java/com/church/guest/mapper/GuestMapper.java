@@ -30,7 +30,7 @@ public class GuestMapper {
     public static GuestResponse toGuestResponse(Guest guest) {
         return guest != null ? GuestResponse.builder()
                 .id(guest.getId())
-                .guestType(guest.getGuestType())
+                .guestType(guest.getGuestType().getCode())
                 .presentation(guest.getPresentation())
                 .person(guest.getPerson())
                 .prayer(guest.getPrayer())

@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @Validated
+@CrossOrigin
 public class GuestController {
 
     @Autowired
@@ -41,14 +42,14 @@ public class GuestController {
 
     @PutMapping(value = "/announced/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    @Secured("ROLE_USER_WRITER")
+    //@Secured("ROLE_USER_WRITER")
     public GuestResponse announcedGuest(@Valid @PathVariable(name = "id") String id) {
         return GuestMapper.toGuestResponse(service.announcedGuest(id));
     }
 
     @GetMapping(value = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
-    @Secured("ROLE_USER_READ")
+    //@Secured("ROLE_USER_READ")
     public Guests findGuests() {
 
         final List<GuestResponse> responses = service.findAll()
@@ -61,7 +62,7 @@ public class GuestController {
 
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
-    @Secured("ROLE_USER_READ")
+    //@Secured("ROLE_USER_READ")
     public GuestResponse findGuestById(@Valid @PathVariable(name = "id") String id) {
         return GuestMapper.toGuestResponse(service.findGuestById(id));
     }

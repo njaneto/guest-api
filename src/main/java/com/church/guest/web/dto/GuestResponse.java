@@ -14,7 +14,7 @@ public class GuestResponse {
 
     private String id;
     private String createdDate;
-    private GuestType guestType;
+    private Integer guestType;
     private Person person;
     private Prayer prayer;
     private Presentation presentation;

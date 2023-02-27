@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class Prayer {
 
-    public String to;
-    public String from;
+    private String to;
+    private String from;
 
 }

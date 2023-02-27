@@ -6,8 +6,9 @@ import lombok.*;
 @Builder
 public class Person {
 
-    public String name;
-    public Church church;
-    public Birthday birthday;
+    private String name;
+    private String invitedBy;
+    private Church church;
+    private Birthday birthday;
 
 }
