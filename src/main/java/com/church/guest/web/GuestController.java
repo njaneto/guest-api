@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @Validated
-@CrossOrigin
+@CrossOrigin("*")
 public class GuestController {
 
     @Autowired
@@ -32,7 +32,7 @@ public class GuestController {
     }
 
     @PutMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.CREATED)
+    @ResponseStatus(value = HttpStatus.OK)
     @Secured("ROLE_USER_WRITER")
     public GuestResponse editGuest(@Valid @PathVariable(name = "id") String id,
                                    @Valid @RequestBody GuestRequest request) {
