@@ -33,6 +33,7 @@ public class SecurityConfigurations {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/user/create").permitAll()
                 .antMatchers(HttpMethod.PUT,"/announced/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/find/**").permitAll()
                 .anyRequest().authenticated()

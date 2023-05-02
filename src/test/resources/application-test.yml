@@ -1,0 +1,17 @@
+server:
+  servlet:
+    context-path: /api/guest
+
+spring:
+  application:
+    name: church-guest-api
+  data:
+    mongodb:
+      uri: any
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+token:
+  secret: any

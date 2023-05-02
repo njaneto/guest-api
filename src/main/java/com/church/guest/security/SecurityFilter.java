@@ -2,6 +2,7 @@ package com.church.guest.security;
 
 import com.church.guest.service.AuthenticationService;
 import com.church.guest.service.TokenService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class SecurityFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -42,6 +44,12 @@ public class SecurityFilter extends OncePerRequestFilter {
     }
 
     private String getTokenJWT(HttpServletRequest request) {
+
+        if (request.getRequestURI().endsWith("login")){
+            log.info( "REQUEST getRequestURI : {}", request.getRequestURI() );
+            return null;
+        }
+
         var authorization = request.getHeader("Authorization");
         if(authorization != null){
             return authorization.replace("Bearer ","");

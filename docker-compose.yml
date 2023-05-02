@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  guest-api:
+    image: njaneto/guest-api:v1.0.0
+    environment:
+      - DATA_SOURCE_URL=mongodb://mongodb:27017/guest
+      - JWT_SECRET=c2VuaGFkYW1pbmhhYXBp
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mongodb
+    networks:
+      - node-network
+
+  project-reception:
+    image: njaneto/project-reception:v1.0.0
+    ports:
+      - '80:80'
+      - '8000:8000'
+    depends_on:
+      - guest-api
+    networks:
+      - node-network
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - dbdata6:/data/db
+    networks:
+      - node-network
+
+volumes:
+  dbdata6:
+
+networks:
+  node-network:
+    driver: bridge
