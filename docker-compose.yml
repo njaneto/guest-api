@@ -1,7 +1,18 @@
 version: '3.8'
 
 services:
+  mongodb:
+    restart: always
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - dbdata:/data/db
+    networks:
+      - node-network
+
   guest-api:
+    restart: always
     image: njaneto/guest-api:v1.0.0
     environment:
       - DATA_SOURCE_URL=mongodb://mongodb:27017/guest
@@ -14,7 +25,8 @@ services:
       - node-network
 
   project-reception:
-    image: njaneto/project-reception:v1.0.0
+    restart: always
+    image: njaneto/project-reception:v1.0.1
     ports:
       - '80:80'
       - '8000:8000'
@@ -23,17 +35,8 @@ services:
     networks:
       - node-network
 
-  mongodb:
-    image: mongo:latest
-    ports:
-      - '27017:27017'
-    volumes:
-      - dbdata6:/data/db
-    networks:
-      - node-network
-
 volumes:
-  dbdata6:
+  dbdata:
 
 networks:
   node-network:
