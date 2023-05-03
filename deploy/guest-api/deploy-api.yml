@@ -14,4 +14,4 @@ spec:
       - name: DATA_SOURCE_URL
         value: mongodb://localhost:27017/guest
       - name: JWT_SECRET
-        value: c2VuaGFkYW1pbmhhYXBp
+        value: any
