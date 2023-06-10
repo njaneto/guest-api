@@ -42,7 +42,7 @@ Requirements for the software and other tools to build, test and push
 ## Start API 
 
 ```
-    docker run -it --name guest-api -e DATA_SOURCE_URL=mongodb://localhost:27017/guest -p 8080:8080 <name-space>/guest-api:<tag>
+    docker run -it --name guest-api -e DATA_SOURCE_URL=mongodb://localhost:27017/guest -e JWT_SECRET=<sua-secret-aqui> -p 8080:8080 <name-space>/guest-api:<tag>
 ```
 
 ### Contributing Authors

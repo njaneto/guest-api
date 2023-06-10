@@ -25,6 +25,7 @@ public class SecurityConfigurations {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
         return httpSecurity
                 .csrf()
                 .disable()
@@ -32,9 +33,12 @@ public class SecurityConfigurations {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/user/create").permitAll()
+                .antMatchers(HttpMethod.PUT,"/announced/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/find/**").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                .cors().and().build();
     }
 
     @Bean
