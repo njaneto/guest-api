@@ -1,12 +1,18 @@
 package com.church.guest.service;
 
-import com.church.guest.web.dto.GuestRequest;
 import com.church.guest.domain.Guest;
 import com.church.guest.mapper.GuestMapper;
 import com.church.guest.repository.GuestRepository;
+import com.church.guest.util.CsvUtil;
+import com.church.guest.web.dto.GuestCsv;
+import com.church.guest.web.dto.GuestRequest;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -66,6 +72,23 @@ public class GuestService {
         guest.setAnnounced(Boolean.TRUE);
 
         return repository.save(guest);
+
+    }
+
+    public List<Guest> fetchAllBetween(LocalDateTime startDate, LocalDateTime endDate) {
+        return repository.findByCreatedDateBetween(startDate, endDate);
+    }
+
+    @SneakyThrows
+    public void exportGuestToCsv(HttpServletResponse response, LocalDateTime startDate, LocalDateTime endDate) {
+
+        PrintWriter writer = response.getWriter();
+        writer.append(CsvUtil.buildHeader(GuestCsv.class));
+
+        CsvUtil.writer(fetchAllBetween(startDate, endDate).stream()
+                .map(GuestMapper::toGuestCsv)
+                .collect(Collectors.toList())
+                , writer);
 
     }
 }

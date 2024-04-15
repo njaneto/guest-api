@@ -12,4 +12,5 @@ public interface GuestRepository extends MongoRepository<Guest, String> {
 
     List<Guest> findByCreatedDateAfterAndAnnouncedFalse(LocalDateTime startDate);
 
+    List<Guest> findByCreatedDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 }

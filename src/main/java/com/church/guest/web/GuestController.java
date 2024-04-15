@@ -1,18 +1,22 @@
 package com.church.guest.web;
 
-import com.church.guest.web.dto.GuestRequest;
-import com.church.guest.web.dto.GuestResponse;
 import com.church.guest.mapper.GuestMapper;
 import com.church.guest.service.GuestService;
+import com.church.guest.web.dto.GuestRequest;
+import com.church.guest.web.dto.GuestResponse;
 import com.church.guest.web.dto.Guests;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,6 +62,21 @@ public class GuestController {
                 .collect(Collectors.toList());
 
         return GuestMapper.toGuestResponses(responses);
+    }
+
+    @GetMapping(value = "/export", produces = "text/csv")
+    @ResponseStatus(value = HttpStatus.OK)
+    //@Secured("ROLE_USER_WRITER")
+    public void exportGuestToCsv(HttpServletResponse response,
+                                 @RequestParam(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                                 @RequestParam(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+                                 @Valid @RequestParam(name = "filename") String filename) {
+
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=".concat(filename));
+        response.setContentType("text/csv; charset=UTF-8");
+        service.exportGuestToCsv(response, startDate, endDate);
+
     }
 
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

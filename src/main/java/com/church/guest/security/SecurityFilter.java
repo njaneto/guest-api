@@ -45,7 +45,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     private String getTokenJWT(HttpServletRequest request) {
 
-        if (request.getRequestURI().endsWith("login")){
+        if (request.getRequestURI().endsWith("export")){
             log.info( "REQUEST getRequestURI : {}", request.getRequestURI() );
             return null;
         }

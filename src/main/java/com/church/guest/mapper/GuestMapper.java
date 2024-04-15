@@ -1,12 +1,15 @@
 package com.church.guest.mapper;
 
-import com.church.guest.domain.Guest;
+import com.church.guest.domain.*;
+import com.church.guest.enums.BirthdayType;
 import com.church.guest.enums.GuestType;
+import com.church.guest.web.dto.GuestCsv;
 import com.church.guest.web.dto.GuestRequest;
 import com.church.guest.web.dto.GuestResponse;
 import com.church.guest.web.dto.Guests;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,5 +48,50 @@ public class GuestMapper {
                 .guests(guests)
                 .size(guests.size())
                 .build();
+    }
+
+    public static GuestCsv toGuestCsv(Guest guest) {
+        return guest != null ? GuestCsv.builder()
+                .id(guest.getId())
+                .createdDate(guest.getCreatedDate().toLocalDate().toString())
+                .guestType(guest.getGuestType().getDesc())
+                .name(Optional.ofNullable(guest.getPerson()).map(Person::getName).orElse(""))
+                .invitedBy(Optional.ofNullable(guest.getPerson()).map(Person::getInvitedBy).orElse(""))
+                .attend(Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getAttend).orElse(false)).orElse(false))
+                .churchName(Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getName).orElse("")).orElse(""))
+
+                .birthdayType(Optional.ofNullable(guest.getPerson())
+                        .map(person -> Optional.ofNullable(person.getBirthday())
+                                .map(birthday -> Optional.ofNullable(birthday.getType())
+                                        .map(BirthdayType::getDesc)
+                                        .orElse(""))
+                                .orElse(""))
+                        .orElse(""))
+
+                .age(formatEmptyAge(Optional.ofNullable(guest.getPerson())
+                        .map(person -> Optional.ofNullable(person.getBirthday())
+                                .map(Birthday::getAge)
+                                .orElse(0))
+                        .orElse(0)))
+
+
+                .to(Optional.ofNullable(guest.getPrayer()).map(Prayer::getTo).orElse(""))
+                .from(Optional.ofNullable(guest.getPrayer()).map(Prayer::getFrom).orElse(""))
+                .parents(Optional.ofNullable(guest.getPresentation()).map(Presentation::getParents).orElse(""))
+                .children(Optional.ofNullable(guest.getPresentation()).map(Presentation::getChildren).orElse(""))
+                .message(formatMessage(guest.getMessage()))
+                .announced(guest.getAnnounced())
+                .build() : null;
+    }
+
+    private static String formatMessage(String message) {
+        if(message == null || message.trim().length() == 0){
+            return message;
+        }
+        return message.replaceAll("\n", " ");
+    }
+
+    private static String formatEmptyAge(Integer age) {
+        return age.equals(0) ? "" : age.toString();
     }
 }
