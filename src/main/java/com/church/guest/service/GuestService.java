@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -25,70 +24,80 @@ public class GuestService {
     @Autowired
     private GuestRepository repository;
 
-    public Guest save(GuestRequest request) {
-        return repository.save(GuestMapper.toGuest(request));
+    public Guest save( GuestRequest request ) {
+        return repository.save( GuestMapper.toGuest( request ) );
     }
 
-    public Guest findGuestById(String id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Guest not fund"));
+    public Guest findGuestById( String id ) {
+        return repository.findById( id )
+                .orElseThrow( () -> new RuntimeException( "Guest not fund" ) );
     }
 
-    public List<Guest> findAll() {
+    public List< Guest > findAllAnnouncedFalse() {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.HOUR, -5);
+        cal.add( Calendar.HOUR, -5 );
 
-        return repository.findByCreatedDateAfterAndAnnouncedFalse(cal.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+        return repository.findByCreatedDateAfterAndAnnouncedFalse( cal.getTime().toInstant().atZone( ZoneId.systemDefault() ).toLocalDateTime() )
                 .stream()
-                .sorted(Comparator.comparing(Guest::getGuestType))
-                .collect(Collectors.toList());
+                .sorted( Comparator.comparing( guest -> guest.getGuestType().getSort() ) )
+                .collect( Collectors.toList() );
     }
 
-    public void delete(String id) {
-        repository.deleteById(id);
+    public List< Guest > findAllDayHistory() {
+        Calendar cal = Calendar.getInstance();
+        cal.add( Calendar.HOUR, -5 );
+
+        return repository.findByCreatedDateAfter( cal.getTime().toInstant().atZone( ZoneId.systemDefault() ).toLocalDateTime() )
+                .stream()
+                .sorted( Comparator.comparing( Guest :: getGuestType ) )
+                .collect( Collectors.toList() );
     }
 
-    public Guest editGuest(String id, GuestRequest request) {
-
-        checkGuestExist(id);
-
-        Guest guest = GuestMapper.toGuest(request);
-        guest.setId(id);
-
-        return repository.save(guest);
+    public void delete( String id ) {
+        repository.deleteById( id );
     }
 
-    private void checkGuestExist(String id) {
-        if (repository.findById(id).isEmpty()) {
-            throw new RuntimeException("Guest not fund");
+    public Guest editGuest( String id, GuestRequest request ) {
+
+        checkGuestExist( id );
+
+        Guest guest = GuestMapper.toGuest( request );
+        guest.setId( id );
+
+        return repository.save( guest );
+    }
+
+    private void checkGuestExist( String id ) {
+        if( repository.findById( id ).isEmpty() ) {
+            throw new RuntimeException( "Guest not fund" );
         }
     }
 
-    public Guest announcedGuest(String id) {
+    public Guest announcedGuest( String id ) {
 
-        checkGuestExist(id);
+        checkGuestExist( id );
 
-        Guest guest = repository.findById(id).orElseThrow();
-        guest.setAnnounced(Boolean.TRUE);
+        Guest guest = repository.findById( id ).orElseThrow();
+        guest.setAnnounced( Boolean.TRUE );
 
-        return repository.save(guest);
+        return repository.save( guest );
 
     }
 
-    public List<Guest> fetchAllBetween(LocalDateTime startDate, LocalDateTime endDate) {
-        return repository.findByCreatedDateBetween(startDate, endDate);
+    public List< Guest > fetchAll() {
+        return repository.findAll();
     }
 
     @SneakyThrows
-    public void exportGuestToCsv(HttpServletResponse response, LocalDateTime startDate, LocalDateTime endDate) {
+    public void exportGuestToCsv( HttpServletResponse response ) {
 
         PrintWriter writer = response.getWriter();
-        writer.append(CsvUtil.buildHeader(GuestCsv.class));
+        writer.append( CsvUtil.buildHeader( GuestCsv.class ) );
 
-        CsvUtil.writer(fetchAllBetween(startDate, endDate).stream()
-                .map(GuestMapper::toGuestCsv)
-                .collect(Collectors.toList())
-                , writer);
+        CsvUtil.writer( fetchAll().stream()
+                        .map( GuestMapper :: toGuestCsv )
+                        .collect( Collectors.toList() )
+                , writer );
 
     }
 }

@@ -13,6 +13,6 @@ public class Birthday {
 
     @Convert(converter = BirthdayTypeConverter.class)
     private BirthdayType type;
-    private Integer age;
+    private String age;
 
 }

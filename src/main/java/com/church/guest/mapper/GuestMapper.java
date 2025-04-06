@@ -68,11 +68,11 @@ public class GuestMapper {
                                 .orElse(""))
                         .orElse(""))
 
-                .age(formatEmptyAge(Optional.ofNullable(guest.getPerson())
+                .age(Optional.ofNullable(guest.getPerson())
                         .map(person -> Optional.ofNullable(person.getBirthday())
                                 .map(Birthday::getAge)
-                                .orElse(0))
-                        .orElse(0)))
+                                .orElse("0"))
+                        .orElse("0"))
 
 
                 .to(Optional.ofNullable(guest.getPrayer()).map(Prayer::getTo).orElse(""))
@@ -85,10 +85,10 @@ public class GuestMapper {
     }
 
     private static String formatMessage(String message) {
-        if(message == null || message.trim().length() == 0){
+        if(message == null || message.trim().isEmpty() ){
             return message;
         }
-        return message.replaceAll("\n", " ");
+        return message.replace("\n", " ");
     }
 
     private static String formatEmptyAge(Integer age) {

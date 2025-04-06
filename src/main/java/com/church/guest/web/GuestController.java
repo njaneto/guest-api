@@ -6,7 +6,6 @@ import com.church.guest.web.dto.GuestRequest;
 import com.church.guest.web.dto.GuestResponse;
 import com.church.guest.web.dto.Guests;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -56,7 +55,7 @@ public class GuestController {
     //@Secured("ROLE_USER_READ")
     public Guests findGuests() {
 
-        final List<GuestResponse> responses = service.findAll()
+        final List<GuestResponse> responses = service.findAllAnnouncedFalse()
                 .stream()
                 .map(GuestMapper::toGuestResponse)
                 .collect(Collectors.toList());
@@ -66,16 +65,13 @@ public class GuestController {
 
     @GetMapping(value = "/export", produces = "text/csv")
     @ResponseStatus(value = HttpStatus.OK)
-    //@Secured("ROLE_USER_WRITER")
-    public void exportGuestToCsv(HttpServletResponse response,
-                                 @RequestParam(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-                                 @RequestParam(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
-                                 @Valid @RequestParam(name = "filename") String filename) {
+    @Secured("ROLE_USER_WRITER")
+    public void exportGuestToCsv(HttpServletResponse response) {
 
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=".concat(filename));
+                "attachment; filename=".concat("recepcao-".concat( LocalDateTime.now().toString() )));
         response.setContentType("text/csv; charset=UTF-8");
-        service.exportGuestToCsv(response, startDate, endDate);
+        service.exportGuestToCsv(response);
 
     }
 
@@ -84,6 +80,19 @@ public class GuestController {
     //@Secured("ROLE_USER_READ")
     public GuestResponse findGuestById(@Valid @PathVariable(name = "id") String id) {
         return GuestMapper.toGuestResponse(service.findGuestById(id));
+    }
+
+    @GetMapping(value = "/history", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
+    @Secured("ROLE_USER_WRITER")
+    public Guests history() {
+
+        final List<GuestResponse> responses = service.findAllDayHistory()
+                .stream()
+                .map(GuestMapper::toGuestResponse)
+                .collect(Collectors.toList());
+
+        return GuestMapper.toGuestResponses(responses);
     }
 
     @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
