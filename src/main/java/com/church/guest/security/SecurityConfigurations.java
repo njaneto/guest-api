@@ -9,41 +9,48 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(securedEnabled = true)
+@EnableMethodSecurity( securedEnabled = true )
 public class SecurityConfigurations {
 
+    private final SecurityFilter securityFilter;
+
     @Autowired
-    private SecurityFilter securityFilter;
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-
-        return httpSecurity
-                .csrf()
-                .disable()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/user/create").permitAll()
-                .antMatchers(HttpMethod.PUT,"/announced/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/find/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/sectors/**").permitAll()
-                .anyRequest().authenticated()
-                .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                .cors().and().build();
+    public SecurityConfigurations( SecurityFilter securityFilter ) {
+        this.securityFilter = securityFilter;
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public SecurityFilterChain securityFilterChain( HttpSecurity httpSecurity ) throws Exception {
+
+        return httpSecurity
+                .csrf( AbstractHttpConfigurer :: disable )
+                .cors( httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configure( httpSecurity ) )
+                .sessionManagement( session -> session.sessionCreationPolicy( SessionCreationPolicy.STATELESS ) )
+                .authorizeHttpRequests( auth -> auth
+                        .requestMatchers( HttpMethod.POST, "/auth/login" ).permitAll()
+                        .requestMatchers( HttpMethod.PUT, "/announced/**" ).permitAll()
+                        .requestMatchers( HttpMethod.GET, "/find/**" ).permitAll()
+                        .requestMatchers( HttpMethod.GET, "/sectors/**" ).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .addFilterBefore( securityFilter, UsernamePasswordAuthenticationFilter.class )
+                .build();
+
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager( AuthenticationConfiguration authenticationConfiguration ) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 

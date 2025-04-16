@@ -15,12 +15,3 @@ spring:
 
 token:
   secret: ${JWT_SECRET}
-
-logging:
-  level:
-    org:
-      springframework:
-        data:
-          mongodb:
-            core:
-              MongoTemplate: DEBUG

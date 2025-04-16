@@ -11,18 +11,22 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin("*")
+@CrossOrigin(value = "*")
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+
+    private final TokenService tokenService;
 
     @Autowired
-    private TokenService tokenService;
+    public AuthenticationController( AuthenticationManager authenticationManager, TokenService tokenService ) {
+        this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
+    }
 
     @PostMapping( value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public TokenResponse login(@Valid @RequestBody LoginRequest request ){

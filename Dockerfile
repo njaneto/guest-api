@@ -1,16 +1,20 @@
-FROM --platform=linux/amd64 maven:3.8-jdk-11 as builder
+# Etapa de build
+FROM --platform=linux/amd64 maven:3.9.9-amazoncorretto-21-alpine AS builder
 
 WORKDIR /app
 
 COPY pom.xml .
+RUN mvn dependency:go-offline
 COPY src ./src
 
-RUN mvn package -DskipTests
+RUN mvn clean package -DskipTests
 
-FROM --platform=linux/amd64 openjdk:11
+FROM --platform=linux/amd64 amazoncorretto:21.0.7-alpine
 
-COPY --from=builder /app/target/guest-*.jar /guest.jar
+WORKDIR /app
 
-CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/guest.jar"]
-EXPOSE 8080
-EXPOSE 80
+COPY --from=builder /app/target/guest-*.jar guest.jar
+
+EXPOSE 8080 80
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "guest.jar"]
