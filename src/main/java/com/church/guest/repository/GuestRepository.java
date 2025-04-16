@@ -11,5 +11,5 @@ import java.util.List;
 public interface GuestRepository extends MongoRepository<Guest, String> {
 
     List<Guest> findByCreatedDateAfterAndAnnouncedFalse(LocalDateTime startDate);
-
+    List<Guest> findByCreatedDateAfter( LocalDateTime startDate );
 }

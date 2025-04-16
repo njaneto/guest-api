@@ -36,6 +36,7 @@ public class SecurityConfigurations {
                 .antMatchers(HttpMethod.POST, "/user/create").permitAll()
                 .antMatchers(HttpMethod.PUT,"/announced/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/find/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/sectors/**").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .cors().and().build();

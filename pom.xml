@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.church</groupId>
 	<artifactId>guest</artifactId>
-	<version>1.1.0</version>
+	<version>1.0.9</version>
 	<name>guest</name>
 	<description>api for church guest </description>
 
@@ -74,8 +74,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.7.1</version>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>
