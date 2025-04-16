@@ -38,34 +38,38 @@ public class GuestCsv {
     private String churchName;
 
     @CsvBindByPosition(position = 7)
+    @CsvBindByName(column = "nome_setor")
+    private String sectorName;
+
+    @CsvBindByPosition(position = 8)
     @CsvBindByName(column = "tipo_aniversario")
     private String birthdayType;
 
-    @CsvBindByPosition(position = 8)
+    @CsvBindByPosition(position = 9)
     @CsvBindByName(column = "idade")
     private String age;
 
-    @CsvBindByPosition(position = 9)
+    @CsvBindByPosition(position = 10)
     @CsvBindByName(column = "de")
     private String to;
 
-    @CsvBindByPosition(position = 10)
+    @CsvBindByPosition(position = 11)
     @CsvBindByName(column = "para")
     private String from;
 
-    @CsvBindByPosition(position = 11)
+    @CsvBindByPosition(position = 12)
     @CsvBindByName(column = "nome_pais")
     private String parents;
 
-    @CsvBindByPosition(position = 12)
+    @CsvBindByPosition(position = 13)
     @CsvBindByName(column = "nome_filho")
     private String children;
 
-    @CsvBindByPosition(position = 13)
+    @CsvBindByPosition(position = 14)
     @CsvBindByName(column = "mensagem")
     private String message;
 
-    @CsvBindByPosition(position = 14)
+    @CsvBindByPosition(position = 15)
     @CsvBindByName(column = "lido")
     private Boolean announced;
 

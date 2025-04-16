@@ -10,12 +10,13 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 public enum GuestType {
 
-    VISITOR(1, "VISITANTE", 0),
-    WARNING(2, "AVISO/RECADO", 1),
-    BIRTHDAY(3, "ANIVERSÁRIO",2),
-    BIRTHDAY_WEDDING(6, "ANIVERSÁRIO",3),
-    PRAYER(4, "ORAÇÃO",4),
-    PRESENTATION(5, "APRESENTAÇÃO",5),
+    VISITOR_PASTO(7, "VISITANTE",0),
+    VISITOR(1, "VISITANTE", 1),
+    WARNING(2, "AVISO/RECADO", 2),
+    BIRTHDAY(3, "ANIVERSÁRIO",4),
+    BIRTHDAY_WEDDING(6, "ANIVERSÁRIO",5),
+    PRAYER(4, "ORAÇÃO",6),
+    PRESENTATION(5, "APRESENTAÇÃO",7),
     ;
 
     private final int code;

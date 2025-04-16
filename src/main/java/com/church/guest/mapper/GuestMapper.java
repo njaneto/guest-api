@@ -9,7 +9,6 @@ import com.church.guest.web.dto.GuestResponse;
 import com.church.guest.web.dto.Guests;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -59,6 +58,7 @@ public class GuestMapper {
                 .invitedBy(Optional.ofNullable(guest.getPerson()).map(Person::getInvitedBy).orElse(""))
                 .attend(Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getAttend).orElse(false)).orElse(false))
                 .churchName(Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getName).orElse("")).orElse(""))
+                .sectorName( Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getSector).orElse("")).orElse("") )
 
                 .birthdayType(Optional.ofNullable(guest.getPerson())
                         .map(person -> Optional.ofNullable(person.getBirthday())
@@ -89,9 +89,5 @@ public class GuestMapper {
             return message;
         }
         return message.replace("\n", " ");
-    }
-
-    private static String formatEmptyAge(Integer age) {
-        return age.equals(0) ? "" : age.toString();
     }
 }

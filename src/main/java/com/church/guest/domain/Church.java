@@ -9,4 +9,5 @@ public class Church {
 
     private Boolean attend;
     private String name;
+    private String sector;
 }
