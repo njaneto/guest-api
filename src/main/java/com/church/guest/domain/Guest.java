@@ -7,7 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 
-import javax.persistence.Convert;
+import jakarta.persistence.Convert;
 import java.time.LocalDateTime;
 
 @Data

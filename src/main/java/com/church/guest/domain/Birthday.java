@@ -5,7 +5,7 @@ import com.church.guest.repository.converters.BirthdayTypeConverter;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Convert;
+import jakarta.persistence.Convert;
 
 @Data
 @Builder

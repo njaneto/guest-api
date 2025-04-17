@@ -15,23 +15,28 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
 @Validated
-@CrossOrigin( "*" )
+@RestController
+@CrossOrigin(value = "*")
 public class GuestController {
 
+    private final GuestService service;
+
     @Autowired
-    private GuestService service;
+    public GuestController( GuestService service ) {
+        this.service = service;
+    }
 
     @PostMapping( value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.CREATED )
     @Secured( "ROLE_USER_WRITER" )
+    //@CrossOrigin(value = "*", allowedHeaders = "*")
     public GuestResponse saveGuest( @Valid @RequestBody GuestRequest request ) {
         return GuestMapper.toGuestResponse( service.save( request ) );
     }
@@ -39,6 +44,7 @@ public class GuestController {
     @PutMapping( value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
     @Secured( "ROLE_USER_WRITER" )
+    //@CrossOrigin(value = "*", allowedHeaders = "*")
     public GuestResponse editGuest( @Valid @PathVariable( name = "id" ) String id,
                                     @Valid @RequestBody GuestRequest request ) {
 
@@ -47,7 +53,6 @@ public class GuestController {
 
     @PutMapping( value = "/announced/{id}" )
     @ResponseStatus( value = HttpStatus.OK )
-    //@Secured("ROLE_USER_WRITER")
     public GuestResponse announcedGuest( @Valid @PathVariable( name = "id" ) String id ) {
         return GuestMapper.toGuestResponse( service.announcedGuest( id, Boolean.TRUE ) );
     }
@@ -55,6 +60,7 @@ public class GuestController {
     @PutMapping( value = "/unread/{id}" )
     @ResponseStatus( value = HttpStatus.OK )
     @Secured( "ROLE_USER_WRITER" )
+    //@CrossOrigin(value = "*", allowedHeaders = "*")
     public GuestResponse unreadGuest( @Valid @PathVariable( name = "id" ) String id ) {
         return GuestMapper.toGuestResponse( service.announcedGuest( id, Boolean.FALSE ) );
     }
@@ -62,7 +68,6 @@ public class GuestController {
 
     @GetMapping( value = "/find", produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
-    //@Secured("ROLE_USER_READ")
     public Guests findGuests() {
 
         final List< GuestResponse > responses = service.findAllAnnouncedFalse()
@@ -83,6 +88,7 @@ public class GuestController {
     @PostMapping( value = "/sector", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.CREATED )
     @Secured( "ROLE_USER_WRITER" )
+    //@CrossOrigin(value = "*", allowedHeaders = "*")
     public Sector saveGuest( @Valid @RequestBody SectorRequest sectorRequest ) {
         return service.saveSector( Sector.builder().value( sectorRequest.getValue() ).build() );
     }
@@ -91,6 +97,7 @@ public class GuestController {
     @GetMapping( value = "/export", produces = "text/csv" )
     @ResponseStatus( value = HttpStatus.OK )
     @Secured( "ROLE_USER_WRITER" )
+    //@CrossOrigin(value = "*", allowedHeaders = "*")
     public void exportGuestToCsv( HttpServletResponse response ) {
 
         response.setHeader( HttpHeaders.CONTENT_DISPOSITION,
@@ -102,7 +109,6 @@ public class GuestController {
 
     @GetMapping( value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
-    //@Secured("ROLE_USER_READ")
     public GuestResponse findGuestById( @Valid @PathVariable( name = "id" ) String id ) {
         return GuestMapper.toGuestResponse( service.findGuestById( id ) );
     }
@@ -110,6 +116,7 @@ public class GuestController {
     @GetMapping( value = "/history", produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
     @Secured( "ROLE_USER_WRITER" )
+    //@CrossOrigin(value = "*", allowedHeaders = "*")
     public Guests history() {
 
         final List< GuestResponse > responses = service.findAllDayHistory()
@@ -123,6 +130,7 @@ public class GuestController {
     @DeleteMapping( value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.NO_CONTENT )
     @Secured( "ROLE_USER_WRITER" )
+    //@CrossOrigin(value = "*", allowedHeaders = "*")
     public void delete( @Valid @PathVariable( name = "id" ) String id ) {
         service.delete( id );
     }

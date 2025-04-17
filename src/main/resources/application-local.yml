@@ -1,0 +1,26 @@
+server:
+  servlet:
+    context-path: /api/guest
+
+spring:
+  application:
+    name: church-guest-api
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/guest
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+token:
+  secret: ZXNzYSBlaCBhIHRva2VuIGxvY2Fs
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG

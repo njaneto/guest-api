@@ -12,7 +12,7 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.time.ZoneId;
 import java.util.Calendar;
@@ -23,11 +23,15 @@ import java.util.stream.Collectors;
 @Service
 public class GuestService {
 
-    @Autowired
-    private GuestRepository guestRepository;
+    private final GuestRepository guestRepository;
+
+    private final SectorRepository sectorRepository;
 
     @Autowired
-    private SectorRepository sectorRepository;
+    public GuestService( GuestRepository guestRepository, SectorRepository sectorRepository ) {
+        this.guestRepository = guestRepository;
+        this.sectorRepository = sectorRepository;
+    }
 
     public Guest save( GuestRequest request ) {
         return guestRepository.save( GuestMapper.toGuest( request ) );

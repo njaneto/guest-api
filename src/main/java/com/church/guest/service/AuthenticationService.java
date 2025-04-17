@@ -12,8 +12,12 @@ import java.util.Optional;
 @Service
 public class AuthenticationService implements UserDetailsService {
 
+    private final UserRepository userRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    public AuthenticationService( UserRepository userRepository ) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) {
