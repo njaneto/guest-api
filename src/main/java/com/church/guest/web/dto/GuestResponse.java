@@ -15,6 +15,7 @@ public class GuestResponse {
     private String id;
     private String createdDate;
     private Integer guestType;
+    private Integer sort;
     private Person person;
     private Prayer prayer;
     private Presentation presentation;
