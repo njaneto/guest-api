@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,24 +28,27 @@ import java.util.stream.Collectors;
 public class GuestController {
 
     private final GuestService service;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired
-    public GuestController( GuestService service ) {
+    public GuestController( GuestService service, SimpMessagingTemplate simpMessagingTemplate ) {
         this.service = service;
+        this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
     @PostMapping( value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.CREATED )
     @Secured( "ROLE_USER_WRITER" )
-    //@CrossOrigin(value = "*", allowedHeaders = "*")
     public GuestResponse saveGuest( @Valid @RequestBody GuestRequest request ) {
-        return GuestMapper.toGuestResponse( service.save( request ) );
+        var guest = GuestMapper.toGuestResponse( service.save( request ) );
+        simpMessagingTemplate.convertAndSend( "/topic/guests", guest );
+
+        return guest;
     }
 
     @PutMapping( value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
     @Secured( "ROLE_USER_WRITER" )
-    //@CrossOrigin(value = "*", allowedHeaders = "*")
     public GuestResponse editGuest( @Valid @PathVariable( name = "id" ) String id,
                                     @Valid @RequestBody GuestRequest request ) {
 
@@ -60,7 +64,6 @@ public class GuestController {
     @PutMapping( value = "/unread/{id}" )
     @ResponseStatus( value = HttpStatus.OK )
     @Secured( "ROLE_USER_WRITER" )
-    //@CrossOrigin(value = "*", allowedHeaders = "*")
     public GuestResponse unreadGuest( @Valid @PathVariable( name = "id" ) String id ) {
         return GuestMapper.toGuestResponse( service.announcedGuest( id, Boolean.FALSE ) );
     }
@@ -88,7 +91,6 @@ public class GuestController {
     @PostMapping( value = "/sector", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.CREATED )
     @Secured( "ROLE_USER_WRITER" )
-    //@CrossOrigin(value = "*", allowedHeaders = "*")
     public Sector saveGuest( @Valid @RequestBody SectorRequest sectorRequest ) {
         return service.saveSector( Sector.builder().value( sectorRequest.getValue() ).build() );
     }
@@ -97,7 +99,6 @@ public class GuestController {
     @GetMapping( value = "/export", produces = "text/csv" )
     @ResponseStatus( value = HttpStatus.OK )
     @Secured( "ROLE_USER_WRITER" )
-    //@CrossOrigin(value = "*", allowedHeaders = "*")
     public void exportGuestToCsv( HttpServletResponse response ) {
 
         response.setHeader( HttpHeaders.CONTENT_DISPOSITION,
@@ -116,7 +117,6 @@ public class GuestController {
     @GetMapping( value = "/history", produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
     @Secured( "ROLE_USER_WRITER" )
-    //@CrossOrigin(value = "*", allowedHeaders = "*")
     public Guests history() {
 
         final List< GuestResponse > responses = service.findAllDayHistory()
@@ -130,7 +130,6 @@ public class GuestController {
     @DeleteMapping( value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.NO_CONTENT )
     @Secured( "ROLE_USER_WRITER" )
-    //@CrossOrigin(value = "*", allowedHeaders = "*")
     public void delete( @Valid @PathVariable( name = "id" ) String id ) {
         service.delete( id );
     }

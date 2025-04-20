@@ -33,6 +33,7 @@ public class GuestMapper {
         return guest != null ? GuestResponse.builder()
                 .id(guest.getId())
                 .guestType(guest.getGuestType().getCode())
+                .sort( guest.getGuestType().getSort() )
                 .presentation(guest.getPresentation())
                 .person(guest.getPerson())
                 .prayer(guest.getPrayer())
