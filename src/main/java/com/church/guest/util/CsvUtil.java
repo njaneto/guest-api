@@ -26,7 +26,7 @@ public class CsvUtil {
 
         StatefulBeanToCsv< T > csv = new StatefulBeanToCsvBuilder< T >( writer )
                 .withQuotechar( NO_QUOTE_CHARACTER )
-                .withSeparator( '|' )
+                .withSeparator( ';' )
                 .withOrderedResults( true )
                 .build();
 
