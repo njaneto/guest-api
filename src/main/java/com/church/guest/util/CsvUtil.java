@@ -21,12 +21,14 @@ import static com.opencsv.ICSVWriter.NO_QUOTE_CHARACTER;
 @NoArgsConstructor( access = AccessLevel.PRIVATE )
 public class CsvUtil {
 
+    private static final char SEMICOLON = ';';
+
     @SneakyThrows
     public static < T > void writer( List< T > fetchAll, Writer writer ) {
 
         StatefulBeanToCsv< T > csv = new StatefulBeanToCsvBuilder< T >( writer )
                 .withQuotechar( NO_QUOTE_CHARACTER )
-                .withSeparator( ';' )
+                .withSeparator( SEMICOLON )
                 .withOrderedResults( true )
                 .build();
 
@@ -40,7 +42,7 @@ public class CsvUtil {
                         && field.getAnnotation( CsvBindByName.class ) != null )
                 .sorted( Comparator.comparing( field -> field.getAnnotation( CsvBindByPosition.class ).position() ) )
                 .map( field -> field.getAnnotation( CsvBindByName.class ).column() )
-                .collect( Collectors.joining( Character.toString( '|' ) ) )
+                .collect( Collectors.joining( Character.toString( SEMICOLON ) ) )
                 .toUpperCase( Locale.ROOT )
                 .concat( DEFAULT_LINE_END );
     }
