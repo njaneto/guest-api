@@ -11,6 +11,9 @@ RUN mvn clean package -DskipTests
 
 FROM --platform=linux/amd64 amazoncorretto:21.0.7-alpine
 
+ENV TZ=America/Sao_Paulo
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 WORKDIR /app
 
 COPY --from=builder /app/target/guest-*.jar guest.jar

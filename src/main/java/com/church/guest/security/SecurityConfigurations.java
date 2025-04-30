@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,8 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -35,16 +34,18 @@ public class SecurityConfigurations {
 
         return httpSecurity
                 .csrf( AbstractHttpConfigurer :: disable )
-                .cors( httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configure( httpSecurity ) )
+                .cors( Customizer.withDefaults() )
                 .sessionManagement( session -> session.sessionCreationPolicy( SessionCreationPolicy.STATELESS ) )
                 .authorizeHttpRequests( auth -> auth
                         .requestMatchers( HttpMethod.POST, "/auth/login" ).permitAll()
                         .requestMatchers( HttpMethod.PUT, "/announced/**" ).permitAll()
                         .requestMatchers( HttpMethod.GET, "/find/**" ).permitAll()
                         .requestMatchers( HttpMethod.GET, "/sectors/**" ).permitAll()
+                        .requestMatchers( "/ws/**" ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore( securityFilter, UsernamePasswordAuthenticationFilter.class )
+                .httpBasic( Customizer.withDefaults())
                 .build();
 
     }

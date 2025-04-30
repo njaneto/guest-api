@@ -8,11 +8,6 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/guest
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-
 token:
   secret: ZXNzYSBlaCBhIHRva2VuIGxvY2Fs
 
