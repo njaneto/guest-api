@@ -66,9 +66,7 @@ public class GuestController {
     @ResponseStatus( value = HttpStatus.OK )
     @Secured( "ROLE_USER_WRITER" )
     public GuestResponse unreadGuest( @Valid @PathVariable( name = "id" ) String id ) {
-        var guest = GuestMapper.toGuestResponse( service.announcedGuest( id, Boolean.FALSE ) );
-        simpMessagingTemplate.convertAndSend( "/topic/guests", guest );
-        return guest;
+        return GuestMapper.toGuestResponse( service.announcedGuest( id, Boolean.FALSE ) );
     }
 
 
