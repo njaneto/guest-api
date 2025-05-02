@@ -11,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +54,7 @@ public class GuestMapper {
     public static GuestCsv toGuestCsv(Guest guest) {
         return guest != null ? GuestCsv.builder()
                 .id(guest.getId())
-                .createdDate(guest.getCreatedDate().toLocalDate().toString())
+                .createdDate(guest.getCreatedDate().format( DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ) ))
                 .guestType(guest.getGuestType().getDesc())
                 .name(Optional.ofNullable(guest.getPerson()).map(Person::getName).orElse(""))
                 .invitedBy(Optional.ofNullable(guest.getPerson()).map(Person::getInvitedBy).orElse(""))
