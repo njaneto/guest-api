@@ -57,6 +57,7 @@ public class GuestController {
 
     @PutMapping( value = "/announced/{id}" )
     @ResponseStatus( value = HttpStatus.OK )
+    @Secured( "ROLE_USER_READ" )
     public GuestResponse announcedGuest( @Valid @PathVariable( name = "id" ) String id ) {
         return GuestMapper.toGuestResponse( service.announcedGuest( id, Boolean.TRUE ) );
     }
@@ -71,6 +72,7 @@ public class GuestController {
 
     @GetMapping( value = "/find", produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
+    @Secured( "ROLE_USER_READ" )
     public Guests findGuests() {
 
         final List< GuestResponse > responses = service.findAllAnnouncedFalse()
@@ -84,6 +86,7 @@ public class GuestController {
 
     @GetMapping( value = "/sectors", produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
+    @Secured( "ROLE_USER_READ" )
     public List< Sector > findSectors() {
         return service.findAllSectors();
     }
@@ -110,13 +113,14 @@ public class GuestController {
 
     @GetMapping( value = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
+    @Secured( "ROLE_USER_READ" )
     public GuestResponse findGuestById( @Valid @PathVariable( name = "id" ) String id ) {
         return GuestMapper.toGuestResponse( service.findGuestById( id ) );
     }
 
     @GetMapping( value = "/history", produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
-    @Secured( "ROLE_USER_WRITER" )
+    @Secured( "ROLE_USER_READ" )
     public Guests history() {
 
         final List< GuestResponse > responses = service.findAllDayHistory()
