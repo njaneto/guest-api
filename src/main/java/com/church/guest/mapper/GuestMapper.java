@@ -60,7 +60,7 @@ public class GuestMapper {
                 .invitedBy(Optional.ofNullable(guest.getPerson()).map(Person::getInvitedBy).orElse(""))
                 .attend(Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getAttend).orElse(false)).orElse(false))
                 .churchName(Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getName).orElse("")).orElse(""))
-                .sectorName( Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getSector).orElse("")).orElse("") )
+                .sectorName( Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getSectorName).orElse("")).orElse("") )
 
                 .birthdayType(Optional.ofNullable(guest.getPerson())
                         .map(person -> Optional.ofNullable(person.getBirthday())
