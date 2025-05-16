@@ -79,7 +79,7 @@ public class GuestMapper {
 
                 .to(Optional.ofNullable(guest.getPrayer()).map(Prayer::getTo).orElse(""))
                 .from(Optional.ofNullable(guest.getPrayer()).map(Prayer::getFrom).orElse(""))
-                .parents(Optional.ofNullable(guest.getPresentation()).map(Presentation::getParents).orElse(""))
+                .parents(Optional.ofNullable(guest.getPresentation()).map(Presentation:: getMother ).orElse(""))
                 .children(Optional.ofNullable(guest.getPresentation()).map(Presentation::getChildren).orElse(""))
                 .message(formatMessage(guest.getMessage()))
                 .announced(guest.getAnnounced())

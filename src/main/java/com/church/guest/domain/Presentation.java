@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 public class Presentation {
 
-    private String parents;
+    private String mother;
+    private String father;
     private String children;
 }
