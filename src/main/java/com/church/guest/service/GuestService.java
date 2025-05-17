@@ -6,7 +6,7 @@ import com.church.guest.mapper.GuestMapper;
 import com.church.guest.repository.GuestRepository;
 import com.church.guest.repository.SectorRepository;
 import com.church.guest.util.CsvUtil;
-import com.church.guest.web.dto.GuestCsv;
+import com.church.guest.domain.GuestCsv;
 import com.church.guest.web.dto.GuestRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
