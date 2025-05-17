@@ -14,33 +14,33 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService {
 
-    @Value("${token.secret}")
+    @Value( "${token.secret}" )
     private String secret;
 
-    public String createToken(User user) {
+    public String createToken( User user ) {
         try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
+            Algorithm algorithm = Algorithm.HMAC256( secret );
             return JWT.create()
-                    .withIssuer("Guest API")
-                    .withSubject(user.getLogin())
-                    .withClaim("roles", user.getRoles())
-                    .withExpiresAt(LocalDateTime.now().plusHours(5).toInstant(ZoneOffset.of("-03:00")))
-                    .sign(algorithm);
-        } catch (JWTCreationException exception){
-           throw new RuntimeException("Error to create token jwt", exception);
+                    .withIssuer( "Guest API" )
+                    .withSubject( user.getLogin() )
+                    .withClaim( "roles", user.getRoles() )
+                    .withExpiresAt( LocalDateTime.now().plusHours( 5 ).toInstant( ZoneOffset.of( "-03:00" ) ) )
+                    .sign( algorithm );
+        } catch( JWTCreationException exception ) {
+            throw new RuntimeException( "Error to create token jwt", exception );
         }
     }
 
-    public String getSubject(String tokenJWT) {
+    public String getSubject( String tokenJWT ) {
         try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.require(algorithm)
-                    .withIssuer("Guest API")
+            Algorithm algorithm = Algorithm.HMAC256( secret );
+            return JWT.require( algorithm )
+                    .withIssuer( "Guest API" )
                     .build()
-                    .verify(tokenJWT)
+                    .verify( tokenJWT )
                     .getSubject();
-        } catch (JWTVerificationException exception) {
-            throw new RuntimeException("Token JWT invalid!");
+        } catch( JWTVerificationException exception ) {
+            throw new RuntimeException( "Token JWT invalid!" );
         }
     }
 }

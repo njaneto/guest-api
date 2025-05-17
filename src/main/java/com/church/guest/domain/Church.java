@@ -8,6 +8,10 @@ import lombok.Data;
 public class Church {
 
     private Boolean attend;
+    private Boolean sector;
     private String name;
-    private String sector;
+    private String sectorName;
+    private String reverend;
+    private String delegate;
+
 }

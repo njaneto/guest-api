@@ -38,9 +38,6 @@ public class SecurityConfigurations {
                 .sessionManagement( session -> session.sessionCreationPolicy( SessionCreationPolicy.STATELESS ) )
                 .authorizeHttpRequests( auth -> auth
                         .requestMatchers( HttpMethod.POST, "/auth/login" ).permitAll()
-                        .requestMatchers( HttpMethod.PUT, "/announced/**" ).permitAll()
-                        .requestMatchers( HttpMethod.GET, "/find/**" ).permitAll()
-                        .requestMatchers( HttpMethod.GET, "/sectors/**" ).permitAll()
                         .requestMatchers( "/ws/**" ).permitAll()
                         .anyRequest().authenticated()
                 )

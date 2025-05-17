@@ -11,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,13 +54,13 @@ public class GuestMapper {
     public static GuestCsv toGuestCsv(Guest guest) {
         return guest != null ? GuestCsv.builder()
                 .id(guest.getId())
-                .createdDate(guest.getCreatedDate().toLocalDate().toString())
+                .createdDate(guest.getCreatedDate().format( DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ) ))
                 .guestType(guest.getGuestType().getDesc())
                 .name(Optional.ofNullable(guest.getPerson()).map(Person::getName).orElse(""))
                 .invitedBy(Optional.ofNullable(guest.getPerson()).map(Person::getInvitedBy).orElse(""))
                 .attend(Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getAttend).orElse(false)).orElse(false))
                 .churchName(Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getName).orElse("")).orElse(""))
-                .sectorName( Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getSector).orElse("")).orElse("") )
+                .sectorName( Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getSectorName).orElse("")).orElse("") )
 
                 .birthdayType(Optional.ofNullable(guest.getPerson())
                         .map(person -> Optional.ofNullable(person.getBirthday())
@@ -78,7 +79,7 @@ public class GuestMapper {
 
                 .to(Optional.ofNullable(guest.getPrayer()).map(Prayer::getTo).orElse(""))
                 .from(Optional.ofNullable(guest.getPrayer()).map(Prayer::getFrom).orElse(""))
-                .parents(Optional.ofNullable(guest.getPresentation()).map(Presentation::getParents).orElse(""))
+                .parents(Optional.ofNullable(guest.getPresentation()).map(Presentation:: getMother ).orElse(""))
                 .children(Optional.ofNullable(guest.getPresentation()).map(Presentation::getChildren).orElse(""))
                 .message(formatMessage(guest.getMessage()))
                 .announced(guest.getAnnounced())
