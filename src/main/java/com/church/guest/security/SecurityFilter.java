@@ -50,8 +50,6 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     private String getTokenJWT( HttpServletRequest request ) {
 
-        log.info( "REQUEST getRequestURI : {}", request.getRequestURI() );
-
         if( !StringUtil.isNullOrEmpty( request.getHeader( "Authorization" ) ) ) {
             return request.getHeader( "Authorization" ).replace( "Bearer ", "" );
         }

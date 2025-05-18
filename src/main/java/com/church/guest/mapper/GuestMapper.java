@@ -1,12 +1,13 @@
 package com.church.guest.mapper;
 
 import com.church.guest.domain.*;
+import com.church.guest.entity.Guest;
 import com.church.guest.enums.BirthdayType;
 import com.church.guest.enums.GuestType;
-import com.church.guest.domain.GuestCsv;
+import com.church.guest.entity.GuestCsv;
 import com.church.guest.web.dto.GuestRequest;
 import com.church.guest.web.dto.GuestResponse;
-import com.church.guest.web.dto.Guests;
+import com.church.guest.web.dto.GuestsResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GuestMapper {
-    public static Guest toGuest(GuestRequest request) {
+    public static Guest toGuest( GuestRequest request) {
 
         return request != null ? Guest.builder()
                 .guestType(GuestType.ofCode(request.getGuestType()))
@@ -44,8 +45,8 @@ public class GuestMapper {
                 .build() : null ;
     }
 
-    public static Guests toGuestResponses(List<GuestResponse> guests) {
-        return Guests.builder()
+    public static GuestsResponse toGuestResponses( List<GuestResponse> guests) {
+        return GuestsResponse.builder()
                 .guests(guests)
                 .size(guests.size())
                 .build();

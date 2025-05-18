@@ -1,5 +1,9 @@
 package com.church.guest.exceptions;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor( access = AccessLevel.PRIVATE )
 public class TraceContext {
     private static final ThreadLocal<String> TRACE_ID = new ThreadLocal<>();
 

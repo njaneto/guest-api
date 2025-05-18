@@ -8,9 +8,9 @@ import lombok.Data;
 public class Presentation {
 
     /**
-     * remover parents pois nao ser mais usando nos novos modelos
+     * @deprecated (remover parents pois nao ser mais usando nos novos modelos)
      */
-    @Deprecated
+    @Deprecated(since="2.2.2", forRemoval=true)
     private String parents;
 
     private String mother;

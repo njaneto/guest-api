@@ -2,7 +2,7 @@ package com.church.guest.mapper;
 
 import com.church.guest.web.dto.UserRequest;
 import com.church.guest.web.dto.UserResponse;
-import com.church.guest.domain.User;
+import com.church.guest.entity.User;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

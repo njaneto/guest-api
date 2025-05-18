@@ -1,6 +1,6 @@
 package com.church.guest.repository;
 
-import com.church.guest.domain.Guest;
+import com.church.guest.entity.Guest;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
