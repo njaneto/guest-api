@@ -3,7 +3,7 @@ package com.church.guest.mapper;
 import com.church.guest.domain.*;
 import com.church.guest.enums.BirthdayType;
 import com.church.guest.enums.GuestType;
-import com.church.guest.web.dto.GuestCsv;
+import com.church.guest.domain.GuestCsv;
 import com.church.guest.web.dto.GuestRequest;
 import com.church.guest.web.dto.GuestResponse;
 import com.church.guest.web.dto.Guests;
@@ -58,9 +58,14 @@ public class GuestMapper {
                 .guestType(guest.getGuestType().getDesc())
                 .name(Optional.ofNullable(guest.getPerson()).map(Person::getName).orElse(""))
                 .invitedBy(Optional.ofNullable(guest.getPerson()).map(Person::getInvitedBy).orElse(""))
+
                 .attend(Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getAttend).orElse(false)).orElse(false))
+                .sector(Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getSector).orElse(false)).orElse(false))
+
                 .churchName(Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getName).orElse("")).orElse(""))
                 .sectorName( Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getSectorName).orElse("")).orElse("") )
+                .reverend( Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getReverend).orElse("")).orElse("") )
+                .delegate( Optional.ofNullable(guest.getPerson()).map(person -> Optional.ofNullable(person.getChurch()).map(Church::getDelegate).orElse("")).orElse("") )
 
                 .birthdayType(Optional.ofNullable(guest.getPerson())
                         .map(person -> Optional.ofNullable(person.getBirthday())
@@ -79,7 +84,9 @@ public class GuestMapper {
 
                 .to(Optional.ofNullable(guest.getPrayer()).map(Prayer::getTo).orElse(""))
                 .from(Optional.ofNullable(guest.getPrayer()).map(Prayer::getFrom).orElse(""))
-                .parents(Optional.ofNullable(guest.getPresentation()).map(Presentation:: getMother ).orElse(""))
+                .parents(Optional.ofNullable(guest.getPresentation()).map(Presentation:: getParents ).orElse(""))
+                .mother(Optional.ofNullable(guest.getPresentation()).map(Presentation:: getMother ).orElse(""))
+                .father(Optional.ofNullable(guest.getPresentation()).map(Presentation:: getFather ).orElse(""))
                 .children(Optional.ofNullable(guest.getPresentation()).map(Presentation::getChildren).orElse(""))
                 .message(formatMessage(guest.getMessage()))
                 .announced(guest.getAnnounced())

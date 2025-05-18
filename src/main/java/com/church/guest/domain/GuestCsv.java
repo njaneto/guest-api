@@ -1,4 +1,4 @@
-package com.church.guest.web.dto;
+package com.church.guest.domain;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
@@ -38,38 +38,58 @@ public class GuestCsv {
     private String churchName;
 
     @CsvBindByPosition(position = 7)
+    @CsvBindByName(column = "visitante_setorial")
+    private Boolean sector;
+
+    @CsvBindByPosition(position = 8)
     @CsvBindByName(column = "nome_setor")
     private String sectorName;
 
-    @CsvBindByPosition(position = 8)
+    @CsvBindByPosition(position = 9)
+    @CsvBindByName(column = "nome_pastor")
+    private String reverend;
+
+    @CsvBindByPosition(position = 10)
+    @CsvBindByName(column = "nome_representante")
+    private String delegate;
+
+    @CsvBindByPosition(position = 11)
     @CsvBindByName(column = "tipo_aniversario")
     private String birthdayType;
 
-    @CsvBindByPosition(position = 9)
+    @CsvBindByPosition(position = 12)
     @CsvBindByName(column = "idade")
     private String age;
 
-    @CsvBindByPosition(position = 10)
+    @CsvBindByPosition(position = 13)
     @CsvBindByName(column = "de")
     private String to;
 
-    @CsvBindByPosition(position = 11)
+    @CsvBindByPosition(position = 14)
     @CsvBindByName(column = "para")
     private String from;
 
-    @CsvBindByPosition(position = 12)
+    @CsvBindByPosition(position = 15)
     @CsvBindByName(column = "nome_pais")
     private String parents;
 
-    @CsvBindByPosition(position = 13)
+    @CsvBindByPosition(position = 16)
+    @CsvBindByName(column = "nome_pai")
+    private String mother;
+
+    @CsvBindByPosition(position = 17)
+    @CsvBindByName(column = "nome_mae")
+    private String father;
+
+    @CsvBindByPosition(position = 18)
     @CsvBindByName(column = "nome_filho")
     private String children;
 
-    @CsvBindByPosition(position = 14)
+    @CsvBindByPosition(position = 19)
     @CsvBindByName(column = "mensagem")
     private String message;
 
-    @CsvBindByPosition(position = 15)
+    @CsvBindByPosition(position = 20)
     @CsvBindByName(column = "lido")
     private Boolean announced;
 
