@@ -1,4 +1,4 @@
-package com.church.guest.util;
+package com.church.guest.utils;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
@@ -19,7 +19,7 @@ import static com.opencsv.ICSVWriter.DEFAULT_LINE_END;
 import static com.opencsv.ICSVWriter.NO_QUOTE_CHARACTER;
 
 @NoArgsConstructor( access = AccessLevel.PRIVATE )
-public class CsvUtil {
+public class CsvUtils {
 
     private static final char SEMICOLON = ';';
 
