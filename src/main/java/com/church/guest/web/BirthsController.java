@@ -34,12 +34,25 @@ public class BirthsController {
         return service.save( request );
     }
 
-    @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE )
+    @GetMapping( value = "/birthdays-week", produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
     @Secured( "ROLE_USER_READ" )
     public BirthsResponse findBirthdays() {
 
         final List< BirthResponse > births = service.findAllCurrentBirths();
+
+        return BirthsResponse.builder()
+                .births( births )
+                .size( births.size() )
+                .build();
+    }
+
+    @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE )
+    @ResponseStatus( value = HttpStatus.OK )
+    @Secured( "ROLE_USER_READ" )
+    public BirthsResponse findAllBirthdays() {
+
+        final List< BirthResponse > births = service.findAllBirths();
 
         return BirthsResponse.builder()
                 .births( births )

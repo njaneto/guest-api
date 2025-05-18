@@ -541,6 +541,36 @@
 					"response": []
 				},
 				{
+					"name": "/births/birthdays-week",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/guest/births/birthdays-week",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"births",
+								"birthdays-week"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "/births/save",
 					"request": {
 						"auth": {

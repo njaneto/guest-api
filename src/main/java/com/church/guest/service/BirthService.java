@@ -105,4 +105,19 @@ public class BirthService {
     public void delete( String id ) {
         repository.deleteById( id );
     }
+
+    public List< BirthResponse > findAllBirths() {
+        return repository.findAll().stream()
+                .sorted( Comparator.comparing( Birth :: getMonth )
+                        .thenComparing( Birth :: getDay ) )
+                .map( birth -> BirthResponse.builder()
+                        .id( birth.getId() )
+                        .name( birth.getName() )
+                        .age( getAge( birth.getDateOfBirth() ) )
+                        .birthday( getNextBirthday( birth.getDateOfBirth() ) )
+                        .dateOfBirth( birth.getDateOfBirth() )
+                        .createdDate( birth.getCreatedDate() )
+                        .build() )
+                .toList();
+    }
 }
