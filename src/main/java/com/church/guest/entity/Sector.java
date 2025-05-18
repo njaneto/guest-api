@@ -1,5 +1,4 @@
-package com.church.guest.domain;
-
+package com.church.guest.entity;
 
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -11,10 +10,10 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @ToString
-@Document
 @NoArgsConstructor
 @AllArgsConstructor
-public class Events {
+@Document
+public class Sector {
 
     @Id
     private String id;
@@ -22,8 +21,5 @@ public class Events {
     @CreatedDate()
     private LocalDateTime createdDate;
 
-    private String eventName;
-    private String departmentName;
-    private LocalDateTime eventDate;
-
+    private String value;
 }

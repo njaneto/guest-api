@@ -1,16 +1,19 @@
 package com.church.guest.service;
 
-import com.church.guest.domain.Guest;
-import com.church.guest.domain.Sector;
+import com.church.guest.entity.Guest;
+import com.church.guest.entity.Sector;
+import com.church.guest.exceptions.GuestRuntimeException;
 import com.church.guest.mapper.GuestMapper;
 import com.church.guest.repository.GuestRepository;
 import com.church.guest.repository.SectorRepository;
-import com.church.guest.util.CsvUtil;
-import com.church.guest.domain.GuestCsv;
+import com.church.guest.utils.CsvUtils;
+import com.church.guest.entity.GuestCsv;
 import com.church.guest.web.dto.GuestRequest;
+import com.church.guest.web.dto.SectorRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.PrintWriter;
@@ -18,7 +21,8 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class GuestService {
@@ -37,13 +41,26 @@ public class GuestService {
         return guestRepository.save( GuestMapper.toGuest( request ) );
     }
 
-    public Sector saveSector( Sector sector ) {
-        return sectorRepository.save( sector );
+    public Sector saveSector( SectorRequest request ) {
+        sectorRepository.findByValue( request.getValue() )
+                .ifPresent( sector -> {
+                    throw new GuestRuntimeException( "Setor já registrado para: " + sector.getValue(), HttpStatus.CONFLICT );
+                } );
+
+        return sectorRepository.save( Sector.builder()
+                .value( request.getValue() )
+                .build() );
     }
 
     public Guest findGuestById( String id ) {
-        return guestRepository.findById( id )
-                .orElseThrow( () -> new RuntimeException( "Guest not fund" ) );
+        AtomicReference< Guest > guest = new AtomicReference<>();
+
+        guestRepository.findById( id )
+                .ifPresentOrElse( guest :: set, () -> {
+                    throw new GuestRuntimeException( "Aviso não localizado", HttpStatus.NOT_FOUND );
+                } );
+
+        return Optional.of( guest.get() ).get();
     }
 
     public List< Guest > findAllAnnouncedFalse() {
@@ -53,7 +70,7 @@ public class GuestService {
         return guestRepository.findByCreatedDateAfterAndAnnouncedFalse( cal.getTime().toInstant().atZone( ZoneId.systemDefault() ).toLocalDateTime() )
                 .stream()
                 .sorted( Comparator.comparing( guest -> guest.getGuestType().getSort() ) )
-                .collect( Collectors.toList() );
+                .toList();
     }
 
     public List< Guest > findAllDayHistory() {
@@ -63,7 +80,7 @@ public class GuestService {
         return guestRepository.findByCreatedDateAfter( cal.getTime().toInstant().atZone( ZoneId.systemDefault() ).toLocalDateTime() )
                 .stream()
                 .sorted( Comparator.comparing( Guest :: getGuestType ) )
-                .collect( Collectors.toList() );
+                .toList();
     }
 
     public void delete( String id ) {
@@ -72,29 +89,28 @@ public class GuestService {
 
     public Guest editGuest( String id, GuestRequest request ) {
 
-        checkGuestExist( id );
-
         Guest guest = GuestMapper.toGuest( request );
-        guest.setId( id );
+
+        guestRepository.findById( id )
+                .ifPresentOrElse( g -> guest.setId( id ), () -> {
+                    throw new GuestRuntimeException( "Aviso não localizado", HttpStatus.NOT_FOUND );
+                } );
 
         return guestRepository.save( guest );
-    }
-
-    private void checkGuestExist( String id ) {
-        if( guestRepository.findById( id ).isEmpty() ) {
-            throw new RuntimeException( "Guest not fund" );
-        }
     }
 
     public Guest announcedGuest( String id, Boolean read ) {
 
-        checkGuestExist( id );
+        AtomicReference< Guest > guest = new AtomicReference<>();
+        guestRepository.findById( id )
+                .ifPresentOrElse( g -> {
+                    g.setAnnounced( read );
+                    guest.set( guestRepository.save( g ) );
+                }, () -> {
+                    throw new GuestRuntimeException( "Aviso não localizado", HttpStatus.NOT_FOUND );
+                } );
 
-        Guest guest = guestRepository.findById( id ).orElseThrow();
-        guest.setAnnounced( read );
-
-        return guestRepository.save( guest );
-
+        return Optional.of( guest.get() ).get();
     }
 
     public List< Guest > fetchAll() {
@@ -105,11 +121,11 @@ public class GuestService {
     public void exportGuestToCsv( HttpServletResponse response ) {
 
         PrintWriter writer = response.getWriter();
-        writer.append( CsvUtil.buildHeader( GuestCsv.class ) );
+        writer.append( CsvUtils.buildHeader( GuestCsv.class ) );
 
-        CsvUtil.writer( fetchAll().stream()
+        CsvUtils.writer( fetchAll().stream()
                         .map( GuestMapper :: toGuestCsv )
-                        .collect( Collectors.toList() )
+                        .toList()
                 , writer );
 
     }

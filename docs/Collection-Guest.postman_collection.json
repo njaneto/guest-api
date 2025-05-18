@@ -1,0 +1,751 @@
+{
+	"info": {
+		"_postman_id": "1c9fdfe3-c222-486d-8089-bac94cdcecdf",
+		"name": "Collection-Guest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3427888"
+	},
+	"item": [
+		{
+			"name": "Avisos",
+			"item": [
+				{
+					"name": "/guest/announced/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/guest/announced/68292507c41e9a7d0ab47da0",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"announced",
+								"68292507c41e9a7d0ab47da0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/guest/unread/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/guest/unread/68292507c41e9a7d0ab47da0",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"unread",
+								"68292507c41e9a7d0ab47da0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/guest/save",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"guestType\": 4,\n    \"guestTypeDesc\": \"AVISO / RECADO\",\n    \"person\": {\n        \"name\": \"Nilo\",\n        \"church\": {\n            \"attend\": true,\n            \"name\": \"NH\"\n        },\n        \"birthday\": {\n            \"type\": 1,\n            \"age\": 31\n        }\n    },\n    \"prayer\": {\n        \"to\": \"Nilo\",\n        \"from\": \"Rafa\"\n    },\n    \"presentation\": {\n        \"parents\": \"Neto\",\n        \"children\": \"Rafa\"\n    },\n    \"message\": \"obssssssssss\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/guest/save",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/guest/edit/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"guestType\": 1,\n    \"person\": {\n        \"name\": \"Nilo\",\n        \"church\": {\n            \"attend\": true,\n            \"name\": \"NH\"\n        },\n        \"birthday\": {\n            \"type\": 1,\n            \"age\": 31\n        }\n    },\n    \"prayer\": {\n        \"to\": \"Nilo\",\n        \"from\": \"Rafa\"\n    },\n    \"presentation\": {\n        \"parents\": \"Neto\",\n        \"children\": \"Rafa\"\n    },\n    \"message\": \"teste\"\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/guest/edit/68292507c41e9a7d0ab47da0",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"edit",
+								"68292507c41e9a7d0ab47da0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/guest/find",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/guest/find",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"find"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/guest/history",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/guest/history",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/guest/find/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/guest/find/63c9b3ecfba5e7539568a80d",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"find",
+								"63c9b3ecfba5e7539568a80d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/guest/export",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/guest/export",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"export"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/guest/delete/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/guest/delete/68019907b7cc1f21e4cb47f2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"delete",
+								"68019907b7cc1f21e4cb47f2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "/guest/auth/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"tokenGuest\", jsonData.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"description": "\"password\": \"1234@\"",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"\",\n    \"password\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/guest/auth/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/guest/user/create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"\",\n    \"password\": \"\",\n    \"roles\": [\n        \"ROLE_USER_READ\",\n        \"ROLE_USER_WRITER\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/guest/user/create",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"user",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Evento",
+			"item": [
+				{
+					"name": "/events",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/guest/events",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/events/save",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"eventName\": \"Cultos de teste\",\n  \"departmentName\": \"ABDA\",\n  \"eventDate\": \"2025-08-16T13:56:06\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/guest/events/save",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"events",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/guest/events/delete/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/guest/events/delete/6828ca8879a9cc6f7ff77e70",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"events",
+								"delete",
+								"6828ca8879a9cc6f7ff77e70"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Aniversario",
+			"item": [
+				{
+					"name": "/births",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/guest/births",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"births"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/births/save",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Nilo Jose de Andrade Neto\",\n  \"dateOfBirth\": \"1991-06-15\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/guest/births/save",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"births",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/births/delete/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/guest/births/delete/6829163152cd2709b48a7f79",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"births",
+								"delete",
+								"6829163152cd2709b48a7f79"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Utilitários",
+			"item": [
+				{
+					"name": "/utils/sector",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"value\": \"OUTROS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/guest/utils/sector",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"utils",
+								"sector"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/utils/sectors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/guest/utils/sectors",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"utils",
+								"sectors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/utils/departments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenGuest}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/guest/utils/departments",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"guest",
+								"utils",
+								"departments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "tokenGuest",
+			"value": ""
+		},
+		{
+			"key": "host",
+			"value": "https://recepcao-adosasco.com.br",
+			"type": "string"
+		}
+	]
+}

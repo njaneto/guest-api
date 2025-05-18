@@ -2,7 +2,7 @@ package com.church.guest.web;
 
 import com.church.guest.web.dto.TokenResponse;
 import com.church.guest.web.dto.LoginRequest;
-import com.church.guest.domain.User;
+import com.church.guest.entity.User;
 import com.church.guest.mapper.TokenMapper;
 import com.church.guest.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;

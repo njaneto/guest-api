@@ -7,8 +7,8 @@ import java.util.List;
 
 @Data
 @Builder
-public class Guests {
+public class BirthsResponse {
 
-    private List<GuestResponse> guests;
+    private List< BirthResponse > births;
     private Integer size;
 }

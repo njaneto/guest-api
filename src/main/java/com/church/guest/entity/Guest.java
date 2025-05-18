@@ -1,5 +1,8 @@
-package com.church.guest.domain;
+package com.church.guest.entity;
 
+import com.church.guest.domain.Person;
+import com.church.guest.domain.Prayer;
+import com.church.guest.domain.Presentation;
 import com.church.guest.enums.GuestType;
 import com.church.guest.repository.converters.GuestTypeConverter;
 import lombok.*;

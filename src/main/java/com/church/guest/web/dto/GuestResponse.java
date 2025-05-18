@@ -3,7 +3,6 @@ package com.church.guest.web.dto;
 import com.church.guest.domain.Person;
 import com.church.guest.domain.Prayer;
 import com.church.guest.domain.Presentation;
-import com.church.guest.enums.GuestType;
 import lombok.Builder;
 import lombok.Data;
 
