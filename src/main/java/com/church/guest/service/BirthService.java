@@ -44,27 +44,25 @@ public class BirthService {
                 .id( birth.getId() )
                 .name( birth.getName() )
                 .age( getAge( birth.getDateOfBirth() ) )
-                .birthday( getNextBirthday( birth.getDateOfBirth() ) )
+                .birthday( getBirthday( birth.getDateOfBirth() ) )
                 .dateOfBirth( birth.getDateOfBirth() )
                 .createdDate( birth.getCreatedDate() )
                 .build();
     }
 
-    private LocalDate getNextBirthday( LocalDate dateOfBirth ) {
+    private LocalDate getBirthday( LocalDate dateOfBirth ) {
 
-        var birthday = LocalDate.of( LocalDate.now().getYear(),
+        return LocalDate.of( LocalDate.now().getYear(),
                 dateOfBirth.getMonth(),
                 dateOfBirth.getDayOfMonth() );
+    }
 
-        if( !birthday.isBefore( LocalDate.now() ) ) {
-            return birthday;
-        } else {
-            return birthday.plusYears( 1 );
-        }
+    private static LocalDate getNextBirthday( LocalDate birthday ) {
+        return !birthday.isBefore( LocalDate.now() ) ? birthday : birthday.plusYears( 1 );
     }
 
     private int getAge( LocalDate dateOfBirth ) {
-        return Period.between( dateOfBirth, getNextBirthday( dateOfBirth ) ).getYears();
+        return Period.between( dateOfBirth, getBirthday( dateOfBirth ) ).getYears();
     }
 
     public List< BirthResponse > findAllCurrentBirths() {
@@ -95,7 +93,7 @@ public class BirthService {
                         .id( birth.getId() )
                         .name( birth.getName() )
                         .age( getAge( birth.getDateOfBirth() ) )
-                        .birthday( getNextBirthday( birth.getDateOfBirth() ) )
+                        .birthday( getBirthday( birth.getDateOfBirth() ) )
                         .dateOfBirth( birth.getDateOfBirth() )
                         .createdDate( birth.getCreatedDate() )
                         .build() )
@@ -114,7 +112,7 @@ public class BirthService {
                         .id( birth.getId() )
                         .name( birth.getName() )
                         .age( getAge( birth.getDateOfBirth() ) )
-                        .birthday( getNextBirthday( birth.getDateOfBirth() ) )
+                        .birthday( getBirthday( birth.getDateOfBirth() ) )
                         .dateOfBirth( birth.getDateOfBirth() )
                         .createdDate( birth.getCreatedDate() )
                         .build() )
