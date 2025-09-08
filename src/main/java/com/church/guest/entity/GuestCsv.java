@@ -1,4 +1,4 @@
-package com.church.guest.domain;
+package com.church.guest.entity;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;

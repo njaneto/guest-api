@@ -1,6 +1,6 @@
 package com.church.guest.service;
 
-import com.church.guest.domain.Events;
+import com.church.guest.entity.Event;
 import com.church.guest.repository.EventsRepository;
 import com.church.guest.web.dto.EventsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +21,22 @@ public class EventsService {
         this.repository = repository;
     }
 
-    public Events save( EventsRequest request ) {
-        return repository.save( Events.builder()
+    public Event save( EventsRequest request ) {
+        return repository.save( Event.builder()
                 .eventDate( request.getEventDate() )
                 .departmentName( request.getDepartmentName() )
                 .eventName( request.getEventName() )
                 .build() );
     }
 
-    public List< Events > findAllCurrentEvents() {
+    public List< Event > findAllCurrentEvents() {
         Calendar cal = Calendar.getInstance();
         cal.add( Calendar.HOUR, -12 );
 
         var events = repository.findByEventDateAfter( cal.getTime().toInstant().atZone( ZoneId.systemDefault() ).toLocalDateTime() );
 
         return events.stream()
-                .sorted( Comparator.comparing( Events :: getEventDate ) )
+                .sorted( Comparator.comparing( Event :: getEventDate ) )
                 .toList();
     }
 

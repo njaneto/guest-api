@@ -1,4 +1,4 @@
-package com.church.guest.domain;
+package com.church.guest.entity;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

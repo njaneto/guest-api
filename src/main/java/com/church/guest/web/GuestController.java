@@ -1,12 +1,12 @@
 package com.church.guest.web;
 
-import com.church.guest.domain.Sector;
 import com.church.guest.mapper.GuestMapper;
 import com.church.guest.service.GuestService;
 import com.church.guest.web.dto.GuestRequest;
 import com.church.guest.web.dto.GuestResponse;
-import com.church.guest.web.dto.Guests;
-import com.church.guest.web.dto.SectorRequest;
+import com.church.guest.web.dto.GuestsResponse;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,11 +16,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Validated
 @RestController
@@ -73,31 +70,15 @@ public class GuestController {
     @GetMapping( value = "/find", produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
     @Secured( "ROLE_USER_READ" )
-    public Guests findGuests() {
+    public GuestsResponse findGuests() {
 
         final List< GuestResponse > responses = service.findAllAnnouncedFalse()
                 .stream()
                 .map( GuestMapper :: toGuestResponse )
-                .collect( Collectors.toList() );
+                .toList();
 
         return GuestMapper.toGuestResponses( responses );
     }
-
-
-    @GetMapping( value = "/sectors", produces = MediaType.APPLICATION_JSON_VALUE )
-    @ResponseStatus( value = HttpStatus.OK )
-    @Secured( "ROLE_USER_READ" )
-    public List< Sector > findSectors() {
-        return service.findAllSectors();
-    }
-
-    @PostMapping( value = "/sector", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
-    @ResponseStatus( value = HttpStatus.CREATED )
-    @Secured( "ROLE_USER_WRITER" )
-    public Sector saveGuest( @Valid @RequestBody SectorRequest sectorRequest ) {
-        return service.saveSector( Sector.builder().value( sectorRequest.getValue() ).build() );
-    }
-
 
     @GetMapping( value = "/export", produces = "text/csv" )
     @ResponseStatus( value = HttpStatus.OK )
@@ -121,12 +102,12 @@ public class GuestController {
     @GetMapping( value = "/history", produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
     @Secured( "ROLE_USER_READ" )
-    public Guests history() {
+    public GuestsResponse history() {
 
         final List< GuestResponse > responses = service.findAllDayHistory()
                 .stream()
                 .map( GuestMapper :: toGuestResponse )
-                .collect( Collectors.toList() );
+                .toList();
 
         return GuestMapper.toGuestResponses( responses );
     }
