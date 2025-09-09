@@ -38,6 +38,7 @@ public class SecurityConfigurations {
                 .sessionManagement( session -> session.sessionCreationPolicy( SessionCreationPolicy.STATELESS ) )
                 .authorizeHttpRequests( auth -> auth
                         .requestMatchers( HttpMethod.POST, "/auth/login" ).permitAll()
+                        .requestMatchers( HttpMethod.POST, "/cj/orders" ).permitAll()
                         .requestMatchers( "/ws/**" ).permitAll()
                         .anyRequest().authenticated()
                 )
