@@ -13,23 +13,29 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderCreateRequest {
 
-    @NotBlank
     private String cpf;
+
     @NotBlank
     private String nomeCompleto;
+
     private String apelido;
-    @NotBlank
     private String email;
+
     @NotBlank
     private String telefone;
+
     @NotBlank
     private String produto;
+
     @NotNull
     private int qtd;
+
     @NotBlank
     private String opcaoPagamento;
+
     @NotNull
     private String valorUnitario;
+
     @NotNull
     private String valorTotal;
 
