@@ -10,5 +10,7 @@ import java.util.List;
 public class OrdersResponse {
     
     private List< OrderDTO > orders;
+    private Double valorTotalConfirmado;
+    private Double valorTotalPendente;
     private Integer size;
 }

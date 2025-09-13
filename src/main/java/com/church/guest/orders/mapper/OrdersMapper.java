@@ -23,6 +23,16 @@ public class OrdersMapper {
     public static OrdersResponse toOrderResponses( List< OrderDTO > responses ) {
         return OrdersResponse.builder()
                 .orders( responses )
+                .valorTotalConfirmado( responses.stream()
+                        .filter( orderDTO -> orderDTO.getStatusPagamento().equals( "CONFIRMADO" ) )
+                        .mapToDouble( value -> Double.parseDouble( value.getValorTotal()) )
+                        .sum()
+                )
+                .valorTotalPendente( responses.stream()
+                        .filter( orderDTO -> orderDTO.getStatusPagamento().equals( "PENDENTE" ) )
+                        .mapToDouble( value -> Double.parseDouble( value.getValorTotal()) )
+                        .sum()
+                )
                 .size( responses.size() )
                 .build();
     }
@@ -64,23 +74,23 @@ public class OrdersMapper {
         if( qtd == 1 ) {
             return "https://payment-link-v3.stone.com.br/pl_Wnv3KB1XroLwgnvHnIV5gx2VAba0O8Z6";
         } else if( qtd == 2 ) {
-            return "";
+            return "https://payment-link-v3.stone.com.br/pl_qNxJpBegDrWvY5WeujIzV2K0X9jPamlO";
         } else if( qtd == 3 ) {
-            return "";
+            return "https://payment-link-v3.stone.com.br/pl_o5bYQXvEA79R3WYC8FBlJDkBemly1zqK";
         } else if( qtd == 4 ) {
-            return "";
+            return "https://payment-link-v3.stone.com.br/pl_zm5Kk9yWADbMLzCoAiw203xOBN4JrlQo";
         } else if( qtd == 5 ) {
-            return "";
+            return "https://payment-link-v3.stone.com.br/pl_kOnDLJZ6BmXyMATM1spey02PKaQv1jl7";
         } else if( qtd == 6 ) {
-            return "";
+            return "https://payment-link-v3.stone.com.br/pl_PqKxLepNjV53VVYT6ijw34JRoEnw6MGy";
         } else if( qtd == 7 ) {
-            return "";
+            return "https://payment-link-v3.stone.com.br/pl_knjGaXYA4Q6K70tr4C42l3N8vprWVbPe";
         } else if( qtd == 8 ) {
-            return "";
+            return "https://payment-link-v3.stone.com.br/pl_vqn6g3m27aoQeLEI9S3NMdV0EZAxKp8R";
         } else if( qtd == 9 ) {
-            return "";
+            return "https://payment-link-v3.stone.com.br/pl_X9MPORkYVbay1ZXHjf7Dz4LjB7eg2nZN";
         } else if( qtd == 10 ) {
-            return "";
+            return "https://payment-link-v3.stone.com.br/pl_2gMz7Y0GldqberziBRTzEnV6yEvwJQW4";
         }
 
         return "https://payment-link-v3.stone.com.br/pl_Wnv3KB1XroLwgnvHnIV5gx2VAba0O8Z6";
