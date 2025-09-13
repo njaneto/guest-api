@@ -17,6 +17,7 @@ public class OrderCreateRequest {
     private String cpf;
     @NotBlank
     private String nomeCompleto;
+    private String apelido;
     @NotBlank
     private String email;
     @NotBlank

@@ -10,9 +10,11 @@ import java.time.LocalDateTime;
 public class OrderDTO {
 
     private String id;
+    private String numeroPedido;
     private String cpf;
     private LocalDateTime createdDate;
     private String nomeCompleto;
+    private String apelido;
     private String email;
     private String telefone;
     private String produto;

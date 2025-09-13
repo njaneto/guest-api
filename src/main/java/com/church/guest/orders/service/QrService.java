@@ -6,6 +6,8 @@ import com.google.zxing.WriterException;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 
 import java.awt.image.BufferedImage;
@@ -13,7 +15,9 @@ import java.io.ByteArrayOutputStream;
 import java.util.Base64;
 import javax.imageio.ImageIO;
 
+@NoArgsConstructor( access = AccessLevel.PRIVATE )
 public class QrService {
+
     public static String toPngBase64( String payload, int size ) {
         try {
             QRCodeWriter writer = new QRCodeWriter();

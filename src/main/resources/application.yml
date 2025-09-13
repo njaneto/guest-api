@@ -15,3 +15,15 @@ spring:
 
 token:
   secret: ${JWT_SECRET}
+
+notification:
+  whatsGw:
+    base-url: ${BASE_URL}
+    apikey: ${API_KEY}
+    phone_number: ${PHONE_NUMBER}
+    adm_phone_number: ${ADM_PHONE_NUMBER}
+
+pix:
+  key: ${PIX_KEY}
+  nome: ${NOME}
+  cidade: ${CIDADE}

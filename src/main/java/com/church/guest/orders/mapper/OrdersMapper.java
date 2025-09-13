@@ -2,35 +2,29 @@ package com.church.guest.orders.mapper;
 
 import com.church.guest.orders.entity.Order;
 import com.church.guest.orders.web.dto.OrderCreateRequest;
-import com.church.guest.orders.web.dto.OrderCreateResponse;
 import com.church.guest.orders.web.dto.OrderDTO;
 import com.church.guest.orders.web.dto.OrdersResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
+import java.security.SecureRandom;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor( access = AccessLevel.PRIVATE )
 public class OrdersMapper {
-    public static OrderCreateResponse toOrderCreateResponse( Order order ) {
-        return null;
-    }
-
-    public static OrderCreateResponse toOrderCreateResponses( List< OrderCreateResponse > responses ) {
-        return null;
-    }
 
     public static OrdersResponse toOrderResponses( List< OrderDTO > responses ) {
         return OrdersResponse.builder()
                 .orders( responses )
                 .valorTotalConfirmado( responses.stream()
                         .filter( orderDTO -> orderDTO.getStatusPagamento().equals( "CONFIRMADO" ) )
-                        .mapToDouble( value -> Double.parseDouble( value.getValorTotal()) )
+                        .mapToDouble( value -> Double.parseDouble( value.getValorTotal() ) )
                         .sum()
                 )
                 .valorTotalPendente( responses.stream()
                         .filter( orderDTO -> orderDTO.getStatusPagamento().equals( "PENDENTE" ) )
-                        .mapToDouble( value -> Double.parseDouble( value.getValorTotal()) )
+                        .mapToDouble( value -> Double.parseDouble( value.getValorTotal() ) )
                         .sum()
                 )
                 .size( responses.size() )
@@ -40,8 +34,10 @@ public class OrdersMapper {
     public static OrderDTO toOrderDTO( Order order ) {
         return OrderDTO.builder()
                 .id( order.getId() )
+                .numeroPedido( order.getNumeroPedido() )
                 .cpf( order.getCpf() )
                 .nomeCompleto( order.getNomeCompleto() )
+                .apelido( order.getApelido() )
                 .email( order.getEmail() )
                 .telefone( order.getTelefone() )
                 .produto( order.getProduto() )
@@ -55,9 +51,12 @@ public class OrdersMapper {
     }
 
     public static Order toOrder( OrderCreateRequest request ) {
+
         return Order.builder()
+                .numeroPedido( "CJ".concat( StringUtils.leftPad( String.valueOf( new SecureRandom().nextInt( 999999 ) ), 6, '0' ) ) )
                 .cpf( request.getCpf() )
                 .nomeCompleto( request.getNomeCompleto() )
+                .apelido( request.getApelido() )
                 .email( request.getEmail() )
                 .telefone( request.getTelefone() )
                 .produto( request.getProduto() )
@@ -92,7 +91,11 @@ public class OrdersMapper {
         } else if( qtd == 10 ) {
             return "https://payment-link-v3.stone.com.br/pl_2gMz7Y0GldqberziBRTzEnV6yEvwJQW4";
         }
-
         return "https://payment-link-v3.stone.com.br/pl_Wnv3KB1XroLwgnvHnIV5gx2VAba0O8Z6";
+    }
+
+    public static String getNameOrApelido( String nomeCompleto, String apelido ) {
+
+        return StringUtils.isNotBlank( apelido ) ? apelido : nomeCompleto;
     }
 }

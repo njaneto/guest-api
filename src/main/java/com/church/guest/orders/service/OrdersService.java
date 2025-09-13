@@ -7,8 +7,8 @@ import com.church.guest.orders.pix.PixEmvBuilder;
 import com.church.guest.orders.repository.OrdersRepository;
 import com.church.guest.orders.web.dto.OrderCreateRequest;
 import com.church.guest.orders.web.dto.OrderCreateResponse;
-import com.church.guest.reception.entity.Guest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -20,32 +20,53 @@ import java.util.concurrent.atomic.AtomicReference;
 @Service
 public class OrdersService {
 
+    @Value( "${pix.key}" )
+    private String key;
+
+    @Value( "${pix.nome}" )
+    private String nome;
+
+    @Value( "${pix.cidade}" )
+    private String cidade;
+
+
     private final OrdersRepository ordersRepository;
+    private final NotificationService notificationService;
 
     @Autowired
-    public OrdersService( OrdersRepository ordersRepository ) {
+    public OrdersService( OrdersRepository ordersRepository, NotificationService notificationService ) {
         this.ordersRepository = ordersRepository;
+        this.notificationService = notificationService;
     }
 
     public OrderCreateResponse save( OrderCreateRequest request ) {
 
         var order = ordersRepository.save( OrdersMapper.toOrder( request ) );
+        var response = getOrderCreateResponse( order );
 
-        if( request.getOpcaoPagamento().equals( "CARTAO" ) ) {
+        notificationService.newOrderNotification( order, response );
+
+        return response;
+
+    }
+
+    private OrderCreateResponse getOrderCreateResponse( Order order ) {
+
+        if( order.getOpcaoPagamento().equals( "CARTAO" ) ) {
             return OrderCreateResponse.builder()
                     .id( order.getId() )
                     .opcaoPagamento( order.getOpcaoPagamento() )
-                    .paymentLink( OrdersMapper.toPaymentLink( request.getQtd() ) )
+                    .paymentLink( OrdersMapper.toPaymentLink( order.getQtd() ) )
                     .build();
         }
 
         String payload = PixEmvBuilder.buildPayload(
-                "e2caa7b1-cbc9-4f93-80ca-d8eeb51096f7", "Fulvio Eduardo Ferreira", "Osasco",
-                request.getValorTotal(),
-                request.getCpf().concat( "-dt:" )
+                key, nome, cidade,
+                order.getValorTotal(),
+                order.getNumeroPedido().concat( "-dt:" )
                         .concat( LocalDate.now().toString() )
                         .concat( "-qtd:" )
-                        .concat( request.getValorUnitario() ),
+                        .concat( order.getValorUnitario() ),
                 ""
         );
 
@@ -57,7 +78,6 @@ public class OrdersService {
                 .copiaECola( payload )
                 .qrCodeUrl( "data:image/png;base64," + base64 )
                 .build();
-
     }
 
     public List< Order > findAll() {
@@ -66,30 +86,36 @@ public class OrdersService {
 
     public Order confirm( String id ) {
 
-        AtomicReference< Order > order = new AtomicReference<>();
+        AtomicReference< Order > orderAtomicReference = new AtomicReference<>();
         ordersRepository.findById( id )
                 .ifPresentOrElse( g -> {
                     g.setStatusPagamento( "CONFIRMADO" );
-                    order.set( ordersRepository.save( g ) );
+                    orderAtomicReference.set( ordersRepository.save( g ) );
                 }, () -> {
                     throw new GuestRuntimeException( "Pedido não localizado", HttpStatus.NOT_FOUND );
                 } );
 
-        return Optional.of( order.get() ).get();
+        var order = Optional.of( orderAtomicReference.get() ).get();
+        notificationService.confirmOrderNotification( order );
+
+        return order;
 
     }
 
     public Order cancel( String id ) {
-        AtomicReference< Order > order = new AtomicReference<>();
+        AtomicReference< Order > orderAtomicReference = new AtomicReference<>();
         ordersRepository.findById( id )
                 .ifPresentOrElse( g -> {
                     g.setStatusPagamento( "CANCELADO" );
-                    order.set( ordersRepository.save( g ) );
+                    orderAtomicReference.set( ordersRepository.save( g ) );
                 }, () -> {
                     throw new GuestRuntimeException( "Pedido não localizado", HttpStatus.NOT_FOUND );
                 } );
 
-        return Optional.of( order.get() ).get();
+        var order = Optional.of( orderAtomicReference.get() ).get();
+        notificationService.cancelOrderNotification( order );
+
+        return order;
     }
 
     public void delete( String id ) {

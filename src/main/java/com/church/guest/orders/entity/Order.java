@@ -4,9 +4,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.repository.Update;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -23,8 +21,10 @@ public class Order {
     @CreatedDate()
     private LocalDateTime createdDate;
 
+    private String numeroPedido;
     private String cpf;
     private String nomeCompleto;
+    private String apelido;
     private String email;
     private String telefone;
     private String produto;
