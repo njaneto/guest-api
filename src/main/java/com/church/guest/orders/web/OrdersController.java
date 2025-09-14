@@ -51,19 +51,19 @@ public class OrdersController {
         return OrdersMapper.toOrderResponses( responses );
     }
 
-    @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE )
-    @ResponseStatus( value = HttpStatus.OK )
-    @Secured( "CJ_ROLE_USER_READ" )
-    public OrdersResponse findAllOrdersByOrder(@RequestParam String numeroPedido) {
-
-        final List< OrderDTO > responses = service.findAllByNumeroPedido(numeroPedido)
-                .stream()
-                .sorted( Comparator.comparing( Order ::getStatusPagamento ).reversed())
-                .map( OrdersMapper :: toOrderDTO )
-                .toList();
-
-        return OrdersMapper.toOrderResponses( responses );
-    }
+//    @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE )
+//    @ResponseStatus( value = HttpStatus.OK )
+//    @Secured( "CJ_ROLE_USER_READ" )
+//    public OrdersResponse findAllOrdersByOrder(@RequestParam String numeroPedido) {
+//
+//        final List< OrderDTO > responses = service.findAllByNumeroPedido(numeroPedido)
+//                .stream()
+//                .sorted( Comparator.comparing( Order ::getStatusPagamento ).reversed())
+//                .map( OrdersMapper :: toOrderDTO )
+//                .toList();
+//
+//        return OrdersMapper.toOrderResponses( responses );
+//    }
 
 
     @PutMapping( value = "/{id}/confirm" )
