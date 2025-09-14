@@ -67,7 +67,7 @@ public class OrdersService {
                         .concat( LocalDate.now().toString() )
                         .concat( "-qtd:" )
                         .concat( order.getValorUnitario() ),
-                ""
+                order.getNumeroPedido()
         );
 
         String base64 = QrService.toPngBase64( payload, 320 );
@@ -82,6 +82,10 @@ public class OrdersService {
 
     public List< Order > findAll() {
         return ordersRepository.findAll();
+    }
+
+    public List< Order > findAllByNumeroPedido(String numeroPedido) {
+        return ordersRepository.findAllByNumeroPedido( numeroPedido );
     }
 
     public Order confirm( String id ) {
