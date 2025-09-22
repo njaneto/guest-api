@@ -60,7 +60,7 @@ public class OrdersMapper {
                 .nomeCompleto( request.getNomeCompleto() )
                 .apelido( request.getApelido() )
                 .email( request.getEmail() )
-                .telefone( request.getTelefone() )
+                .telefone( request.getTelefone().replaceAll( "\\D", "" ) )
                 .produto( request.getProduto() )
                 .qtd( request.getQtd() )
                 .opcaoPagamento( request.getOpcaoPagamento() )
