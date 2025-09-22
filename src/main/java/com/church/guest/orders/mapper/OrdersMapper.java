@@ -1,6 +1,7 @@
 package com.church.guest.orders.mapper;
 
 import com.church.guest.orders.entity.Order;
+import com.church.guest.orders.entity.OrderCsv;
 import com.church.guest.orders.web.dto.OrderCreateRequest;
 import com.church.guest.orders.web.dto.OrderDTO;
 import com.church.guest.orders.web.dto.OrdersResponse;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.security.SecureRandom;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @NoArgsConstructor( access = AccessLevel.PRIVATE )
@@ -18,7 +20,7 @@ public class OrdersMapper {
         return OrdersResponse.builder()
                 .orders( responses )
                 .valorTotalConfirmado( responses.stream()
-                        .filter( orderDTO -> orderDTO.getStatusPagamento().equals( "CONFIRMADO" ) )
+                        .filter( orderDTO -> ( orderDTO.getStatusPagamento().equals( "CONFIRMADO" ) || orderDTO.getStatusPagamento().equals( "ENTREGUE" ) ) )
                         .mapToDouble( value -> Double.parseDouble( value.getValorTotal() ) )
                         .sum()
                 )
@@ -96,6 +98,23 @@ public class OrdersMapper {
 
     public static String getNameOrApelido( String nomeCompleto, String apelido ) {
 
-        return StringUtils.isNotBlank( apelido ) ? apelido : nomeCompleto;
+        return StringUtils.isNotBlank( apelido ) ? apelido.stripTrailing() : nomeCompleto.stripTrailing();
+    }
+
+    public static OrderCsv toOrderCSV( Order order ) {
+        return OrderCsv.builder()
+                .numeroPedido( order.getNumeroPedido() )
+                .nomeCompleto( order.getNomeCompleto() )
+                .apelido( order.getApelido() )
+                .telefone( order.getTelefone() )
+                .produto( order.getProduto() )
+                .qtd( order.getQtd() )
+                .opcaoPagamento( order.getOpcaoPagamento() )
+                .statusPagamento( order.getStatusPagamento() )
+                .valorUnitario( Double.valueOf( order.getValorUnitario() ) )
+                .qtd( order.getQtd() )
+                .valorTotal( Double.valueOf( order.getValorTotal() ) )
+                .createdDate( order.getCreatedDate().format( DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ) ) )
+                .build();
     }
 }

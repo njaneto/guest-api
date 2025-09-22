@@ -27,13 +27,6 @@ public class NotificationService {
 
     public void newOrderNotification( Order order, OrderCreateResponse orderCreateResponse ) {
 
-        var complemento = "";
-        if( orderCreateResponse.getOpcaoPagamento().equals( "CARTAO" ) ) {
-            complemento = "Opa! Para facilitar, deixo aqui o link de pagamento da sua compra: \n ".concat( orderCreateResponse.getPaymentLink() );
-        } else {
-            complemento = "Opa! Para facilitar, deixo aqui o PIX Copia e Cola de pagamento da sua compra: \n ".concat( orderCreateResponse.getCopiaECola() );
-        }
-
         var msg = new StringBuilder()
                 .append( "Ola " )
                 .append( "_" )
@@ -49,7 +42,7 @@ public class NotificationService {
                 .append( admPhoneNumber )
                 .append( "*\n" )
                 .append( "\n\n\n" )
-                .append( complemento );
+                .append( getComplemento( orderCreateResponse ) );
 
         try {
 
@@ -59,7 +52,16 @@ public class NotificationService {
             log.error( e.getMessage() );
             throw new GuestRuntimeException( "Menesagem nao enviada", HttpStatus.BAD_REQUEST );
         }
+    }
 
+    private static String getComplemento( OrderCreateResponse orderCreateResponse ) {
+        var complemento = "";
+        if( orderCreateResponse.getOpcaoPagamento().equals( "CARTAO" ) ) {
+            complemento = "Opa! Para facilitar, deixo aqui o link de pagamento da sua compra: \n ".concat( orderCreateResponse.getPaymentLink() );
+        } else {
+            complemento = "Opa! Para facilitar, deixo aqui o PIX Copia e Cola de pagamento da sua compra: \n ".concat( orderCreateResponse.getCopiaECola() );
+        }
+        return complemento;
     }
 
     public void confirmOrderNotification( Order order ) {
@@ -110,4 +112,62 @@ public class NotificationService {
 
     }
 
+    public void deliveryOrderNotification( Order order ) {
+
+        var msg = new StringBuilder()
+                .append( "Ola " )
+                .append( "_" )
+                .append( OrdersMapper.getNameOrApelido( order.getNomeCompleto(), order.getApelido() ) )
+                .append( "_" )
+                .append( " Seu Pedido " )
+                .append( "*" )
+                .append( order.getNumeroPedido() )
+                .append( "*" )
+                .append( " foi *ENTREGUE* \uD83D\uDCE6\uD83E\uDD1D" );
+        try {
+
+            var response = whatsGwImpl.send( order, msg.toString() );
+            log.info( response.toString() );
+
+        } catch( Exception e ) {
+            log.error( e.getMessage() );
+            throw new GuestRuntimeException( "Menesagem nao enviada", HttpStatus.BAD_REQUEST );
+        }
+
+    }
+
+    public void pendenteOrderNotification( Order order, OrderCreateResponse orderCreateResponse ) {
+
+        var msg = new StringBuilder()
+                .append( "Oi " )
+                .append( "_" )
+                .append( OrdersMapper.getNameOrApelido( order.getNomeCompleto(), order.getApelido() ) )
+                .append( "_" )
+                .append( " tudo certo? Espero que sim! \uD83D\uDE4C " )
+                .append( "Fizemos uma conferência e identificamos que o pagamento referente ao pedido " )
+                .append( "*" )
+                .append( order.getNumeroPedido() )
+                .append( "*" )
+                .append( " ainda não foi compensado. \n" )
+                .append( "Pode verificar, por favor? Caso já tenha feito, desconsidere esta mensagem. \uD83D\uDE09" )
+                .append( "\n" )
+                .append( "Se precisar de alguma ajuda, é só me chamar no numero abaixo ! " )
+                .append( "\n*" )
+                .append( admPhoneNumber )
+                .append( "*\n" )
+                .append( "\n\n\n" )
+                .append( getComplemento( orderCreateResponse ) );
+
+        try {
+
+            var response = whatsGwImpl.send( order, msg.toString() );
+            log.info( response.toString() );
+
+        } catch( Exception e ) {
+            log.error( e.getMessage() );
+            throw new GuestRuntimeException( "Menesagem nao enviada", HttpStatus.BAD_REQUEST );
+        }
+
+
+    }
 }

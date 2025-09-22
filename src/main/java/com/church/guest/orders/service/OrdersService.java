@@ -2,21 +2,29 @@ package com.church.guest.orders.service;
 
 import com.church.guest.exceptions.GuestRuntimeException;
 import com.church.guest.orders.entity.Order;
+import com.church.guest.orders.entity.OrderCsv;
 import com.church.guest.orders.mapper.OrdersMapper;
 import com.church.guest.orders.pix.PixEmvBuilder;
 import com.church.guest.orders.repository.OrdersRepository;
 import com.church.guest.orders.web.dto.OrderCreateRequest;
 import com.church.guest.orders.web.dto.OrderCreateResponse;
+import com.church.guest.reception.utils.CsvUtils;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
+@Slf4j
 @Service
 public class OrdersService {
 
@@ -122,7 +130,53 @@ public class OrdersService {
         return order;
     }
 
+
+    public Order delivery( String id ) {
+
+        AtomicReference< Order > orderAtomicReference = new AtomicReference<>();
+        ordersRepository.findById( id )
+                .ifPresentOrElse( g -> {
+                    g.setStatusPagamento( "ENTREGUE" );
+                    orderAtomicReference.set( ordersRepository.save( g ) );
+                }, () -> {
+                    throw new GuestRuntimeException( "Pedido não localizado", HttpStatus.NOT_FOUND );
+                } );
+
+        var order = Optional.of( orderAtomicReference.get() ).get();
+        notificationService.deliveryOrderNotification( order );
+
+        return order;
+
+    }
+
     public void delete( String id ) {
         ordersRepository.deleteById( id );
+    }
+
+
+    public String notifyPendente() {
+
+        AtomicInteger count = new AtomicInteger();
+        ordersRepository.findAll().stream()
+                .filter( orderDTO -> orderDTO.getStatusPagamento().equals( "PENDENTE" ) )
+                .forEach( order -> {
+                    count.getAndIncrement();
+                    notificationService.pendenteOrderNotification( order, getOrderCreateResponse( order ) );
+                });
+
+        return count.get() + " pedido(s) pendente(s) notificado(s)";
+    }
+
+    @SneakyThrows
+    public void exportOrderToCsv( HttpServletResponse response ) {
+
+        PrintWriter writer = response.getWriter();
+        writer.append( CsvUtils.buildHeader( OrderCsv.class ) );
+
+        CsvUtils.writer( ordersRepository.findAll().stream()
+                        .map( OrdersMapper :: toOrderCSV )
+                        .toList()
+                , writer );
+
     }
 }
