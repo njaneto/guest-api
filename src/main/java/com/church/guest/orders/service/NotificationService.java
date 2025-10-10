@@ -149,14 +149,14 @@ public class NotificationService {
                 .append( order.getNumeroPedido() )
                 .append( "*" )
                 .append( " ainda não foi compensado. \n" )
-                .append( "Pode verificar, por favor? Caso já tenha feito, desconsidere esta mensagem. \uD83D\uDE09" )
-                .append( "\n" )
-                .append( "Se precisar de alguma ajuda, é só me chamar no numero abaixo ! " )
+                .append( "Pode verificar, por favor e enviar o comprovante de pagamento para o *Fulvio* no numero abaixo ? " )
                 .append( "\n*" )
                 .append( admPhoneNumber )
                 .append( "*\n" )
+                .append( "\n\n" )
+                .append( getComplemento( orderCreateResponse ) )
                 .append( "\n\n\n" )
-                .append( getComplemento( orderCreateResponse ) );
+                .append( "*Caso já tenha feito, desconsidere esta mensagem.* \uD83D\uDE09" );
 
         try {
 

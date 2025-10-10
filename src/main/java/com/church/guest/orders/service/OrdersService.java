@@ -92,7 +92,7 @@ public class OrdersService {
         return ordersRepository.findAll();
     }
 
-    public List< Order > findAllByNumeroPedido(String numeroPedido) {
+    public List< Order > findAllByNumeroPedido( String numeroPedido ) {
         return ordersRepository.findAllByNumeroPedido( numeroPedido );
     }
 
@@ -149,6 +149,20 @@ public class OrdersService {
 
     }
 
+    public Order pendent( String id ) {
+
+        AtomicReference< Order > orderAtomicReference = new AtomicReference<>();
+        ordersRepository.findById( id )
+                .ifPresentOrElse( g -> {
+                    g.setStatusPagamento( "PENDENTE" );
+                    orderAtomicReference.set( ordersRepository.save( g ) );
+                }, () -> {
+                    throw new GuestRuntimeException( "Pedido não localizado", HttpStatus.NOT_FOUND );
+                } );
+
+        return Optional.of( orderAtomicReference.get() ).get();
+    }
+
     public void delete( String id ) {
         ordersRepository.deleteById( id );
     }
@@ -162,7 +176,7 @@ public class OrdersService {
                 .forEach( order -> {
                     count.getAndIncrement();
                     notificationService.pendenteOrderNotification( order, getOrderCreateResponse( order ) );
-                });
+                } );
 
         return count.get() + " pedido(s) pendente(s) notificado(s)";
     }

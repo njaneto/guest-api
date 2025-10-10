@@ -44,7 +44,6 @@ public class OrdersController {
         return NotifyDTO.builder().message( service.notifyPendente() ).build();
     }
 
-
     @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
     @Secured( "CJ_ROLE_USER_READ" )
@@ -92,6 +91,13 @@ public class OrdersController {
     @Secured( "CJ_ROLE_USER_WRITER" )
     public OrderDTO cancel( @Valid @PathVariable( name = "id" ) String id ) {
         return OrdersMapper.toOrderDTO( service.cancel( id ) );
+    }
+
+    @PutMapping( value = "/{id}/pendent" )
+    @ResponseStatus( value = HttpStatus.OK )
+    @Secured( "CJ_ROLE_USER_WRITER" )
+    public OrderDTO pendent( @Valid @PathVariable( name = "id" ) String id ) {
+        return OrdersMapper.toOrderDTO( service.pendent( id ) );
     }
 
     @DeleteMapping( value = "/{id}/delete")
