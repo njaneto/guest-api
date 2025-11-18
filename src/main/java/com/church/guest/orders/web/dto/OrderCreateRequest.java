@@ -20,6 +20,7 @@ public class OrderCreateRequest {
 
     private String apelido;
     private String email;
+    private String prefix;
 
     @NotBlank
     private String telefone;

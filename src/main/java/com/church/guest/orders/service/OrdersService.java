@@ -28,14 +28,20 @@ import java.util.concurrent.atomic.AtomicReference;
 @Service
 public class OrdersService {
 
-    @Value( "${pix.key}" )
+    @Value( "${payment.pix.key}" )
     private String key;
 
-    @Value( "${pix.nome}" )
+    @Value( "${payment.pix.nome}" )
     private String nome;
 
-    @Value( "${pix.cidade}" )
+    @Value( "${payment.pix.cidade}" )
     private String cidade;
+
+    @Value( "${payment.link.endpoint}" )
+    private String paymentLink;
+
+    @Value( "${order.prefix}" )
+    private String orderPrefix;
 
 
     private final OrdersRepository ordersRepository;
@@ -49,6 +55,7 @@ public class OrdersService {
 
     public OrderCreateResponse save( OrderCreateRequest request ) {
 
+        request.setPrefix( orderPrefix );
         var order = ordersRepository.save( OrdersMapper.toOrder( request ) );
         var response = getOrderCreateResponse( order );
 
@@ -64,7 +71,7 @@ public class OrdersService {
             return OrderCreateResponse.builder()
                     .id( order.getId() )
                     .opcaoPagamento( order.getOpcaoPagamento() )
-                    .paymentLink( OrdersMapper.toPaymentLink( order.getQtd() ) )
+                    .paymentLink( paymentLink )
                     .build();
         }
 

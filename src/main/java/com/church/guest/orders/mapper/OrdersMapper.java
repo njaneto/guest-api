@@ -55,7 +55,7 @@ public class OrdersMapper {
     public static Order toOrder( OrderCreateRequest request ) {
 
         return Order.builder()
-                .numeroPedido( "CJ".concat( StringUtils.leftPad( String.valueOf( new SecureRandom().nextInt( 999999 ) ), 6, '0' ) ) )
+                .numeroPedido( request.getPrefix().concat( StringUtils.leftPad( String.valueOf( new SecureRandom().nextInt( 999999 ) ), 6, '0' ) ) )
                 .cpf( request.getCpf() )
                 .nomeCompleto( request.getNomeCompleto() )
                 .apelido( request.getApelido() )
@@ -68,32 +68,6 @@ public class OrdersMapper {
                 .valorUnitario( request.getValorUnitario() )
                 .valorTotal( request.getValorTotal() )
                 .build();
-    }
-
-    public static String toPaymentLink( int qtd ) {
-
-        if( qtd == 1 ) {
-            return "https://payment-link-v3.stone.com.br/pl_Wnv3KB1XroLwgnvHnIV5gx2VAba0O8Z6";
-        } else if( qtd == 2 ) {
-            return "https://payment-link-v3.stone.com.br/pl_qNxJpBegDrWvY5WeujIzV2K0X9jPamlO";
-        } else if( qtd == 3 ) {
-            return "https://payment-link-v3.stone.com.br/pl_o5bYQXvEA79R3WYC8FBlJDkBemly1zqK";
-        } else if( qtd == 4 ) {
-            return "https://payment-link-v3.stone.com.br/pl_zm5Kk9yWADbMLzCoAiw203xOBN4JrlQo";
-        } else if( qtd == 5 ) {
-            return "https://payment-link-v3.stone.com.br/pl_kOnDLJZ6BmXyMATM1spey02PKaQv1jl7";
-        } else if( qtd == 6 ) {
-            return "https://payment-link-v3.stone.com.br/pl_PqKxLepNjV53VVYT6ijw34JRoEnw6MGy";
-        } else if( qtd == 7 ) {
-            return "https://payment-link-v3.stone.com.br/pl_knjGaXYA4Q6K70tr4C42l3N8vprWVbPe";
-        } else if( qtd == 8 ) {
-            return "https://payment-link-v3.stone.com.br/pl_vqn6g3m27aoQeLEI9S3NMdV0EZAxKp8R";
-        } else if( qtd == 9 ) {
-            return "https://payment-link-v3.stone.com.br/pl_X9MPORkYVbay1ZXHjf7Dz4LjB7eg2nZN";
-        } else if( qtd == 10 ) {
-            return "https://payment-link-v3.stone.com.br/pl_2gMz7Y0GldqberziBRTzEnV6yEvwJQW4";
-        }
-        return "https://payment-link-v3.stone.com.br/pl_Wnv3KB1XroLwgnvHnIV5gx2VAba0O8Z6";
     }
 
     public static String getNameOrApelido( String nomeCompleto, String apelido ) {

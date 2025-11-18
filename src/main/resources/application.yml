@@ -23,7 +23,13 @@ notification:
     phone_number: ${PHONE_NUMBER}
     adm_phone_number: ${ADM_PHONE_NUMBER}
 
-pix:
-  key: ${PIX_KEY}
-  nome: ${NOME}
-  cidade: ${CIDADE}
+order:
+  prefix: ${ORDER_PREFIX}
+
+payment:
+  link:
+    endpoint: ${ENDPOINT}
+  pix:
+    key: ${PIX_KEY}
+    nome: ${NOME}
+    cidade: ${CIDADE}

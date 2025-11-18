@@ -1,6 +1,5 @@
 package com.church.guest.orders.service;
 
-import com.church.guest.exceptions.GuestRuntimeException;
 import com.church.guest.orders.entity.Order;
 import com.church.guest.orders.mapper.OrdersMapper;
 import com.church.guest.orders.repository.impl.WhatsGwImpl;
@@ -8,7 +7,6 @@ import com.church.guest.orders.web.dto.OrderCreateResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -50,7 +48,7 @@ public class NotificationService {
             log.info( response.toString() );
         } catch( Exception e ) {
             log.error( e.getMessage() );
-            throw new GuestRuntimeException( "Menesagem nao enviada", HttpStatus.BAD_REQUEST );
+            //throw new GuestRuntimeException( "Menesagem nao enviada", HttpStatus.BAD_REQUEST );
         }
     }
 
@@ -75,7 +73,7 @@ public class NotificationService {
                 .append( "*" )
                 .append( order.getNumeroPedido() )
                 .append( "*" )
-                .append( " foi *CONFIRMADO* com sucesso. \uD83E\uDD73" );
+                .append( " foi *CONFIRMADO*. \uD83E\uDD73" );
         try {
 
             var response = whatsGwImpl.send( order, msg.toString() );
@@ -83,7 +81,7 @@ public class NotificationService {
 
         } catch( Exception e ) {
             log.error( e.getMessage() );
-            throw new GuestRuntimeException( "Menesagem nao enviada", HttpStatus.BAD_REQUEST );
+            //throw new GuestRuntimeException( "Menesagem nao enviada", HttpStatus.BAD_REQUEST );
         }
 
     }
@@ -99,7 +97,7 @@ public class NotificationService {
                 .append( "*" )
                 .append( order.getNumeroPedido() )
                 .append( "*" )
-                .append( " foi *CANCELADO* com sucesso. \uD83D\uDE22" );
+                .append( " foi *CANCELADO*. \uD83D\uDE22" );
         try {
 
             var response = whatsGwImpl.send( order, msg.toString() );
@@ -107,7 +105,7 @@ public class NotificationService {
 
         } catch( Exception e ) {
             log.error( e.getMessage() );
-            throw new GuestRuntimeException( "Menesagem nao enviada", HttpStatus.BAD_REQUEST );
+            //throw new GuestRuntimeException( "Menesagem nao enviada", HttpStatus.BAD_REQUEST );
         }
 
     }
@@ -131,7 +129,7 @@ public class NotificationService {
 
         } catch( Exception e ) {
             log.error( e.getMessage() );
-            throw new GuestRuntimeException( "Menesagem nao enviada", HttpStatus.BAD_REQUEST );
+            //throw new GuestRuntimeException( "Menesagem nao enviada", HttpStatus.BAD_REQUEST );
         }
 
     }
@@ -149,7 +147,7 @@ public class NotificationService {
                 .append( order.getNumeroPedido() )
                 .append( "*" )
                 .append( " ainda não foi compensado. \n" )
-                .append( "Pode verificar, por favor e enviar o comprovante de pagamento para o *Fulvio* no numero abaixo ? " )
+                .append( "Pode verificar, por favor e enviar o comprovante de pagamento no numero abaixo ? " )
                 .append( "\n*" )
                 .append( admPhoneNumber )
                 .append( "*\n" )
@@ -165,7 +163,7 @@ public class NotificationService {
 
         } catch( Exception e ) {
             log.error( e.getMessage() );
-            throw new GuestRuntimeException( "Menesagem nao enviada", HttpStatus.BAD_REQUEST );
+            //throw new GuestRuntimeException( "Menesagem nao enviada", HttpStatus.BAD_REQUEST );
         }
 
 
