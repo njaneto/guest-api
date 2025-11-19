@@ -14,6 +14,11 @@ public class OrderDTO {
     private String cpf;
     private LocalDateTime createdDate;
     private String nomeCompleto;
+
+    private String congregacao;
+    private String cargoMinisterial;
+    private String funcaoEdb;
+
     private String apelido;
     private String email;
     private String telefone;

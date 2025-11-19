@@ -39,6 +39,9 @@ public class OrdersMapper {
                 .numeroPedido( order.getNumeroPedido() )
                 .cpf( order.getCpf() )
                 .nomeCompleto( order.getNomeCompleto() )
+                .cargoMinisterial( order.getCargoMinisterial() )
+                .funcaoEdb( order.getFuncaoEdb() )
+                .congregacao( order.getCongregacao() )
                 .apelido( order.getApelido() )
                 .email( order.getEmail() )
                 .telefone( order.getTelefone() )
@@ -67,6 +70,9 @@ public class OrdersMapper {
                 .statusPagamento( "PENDENTE" )
                 .valorUnitario( request.getValorUnitario() )
                 .valorTotal( request.getValorTotal() )
+                .congregacao( request.getCongregacao() )
+                .funcaoEdb( request.getFuncaoEdb() )
+                .cargoMinisterial( request.getCargoMinisterial() )
                 .build();
     }
 
@@ -79,6 +85,9 @@ public class OrdersMapper {
         return OrderCsv.builder()
                 .numeroPedido( order.getNumeroPedido() )
                 .nomeCompleto( order.getNomeCompleto() )
+                .congregacao( order.getCongregacao() )
+                .funcaoEdb( order.getFuncaoEdb() )
+                .cargoMinisterial( order.getCargoMinisterial() )
                 .apelido( order.getApelido() )
                 .telefone( order.getTelefone() )
                 .produto( order.getProduto() )

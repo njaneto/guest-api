@@ -22,6 +22,10 @@ public class OrderCreateRequest {
     private String email;
     private String prefix;
 
+    private String congregacao;
+    private String cargoMinisterial;
+    private String funcaoEdb;
+
     @NotBlank
     private String telefone;
 

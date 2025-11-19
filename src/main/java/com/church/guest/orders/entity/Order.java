@@ -26,6 +26,11 @@ public class Order {
     private String nomeCompleto;
     private String apelido;
     private String email;
+
+    private String congregacao;
+    private String cargoMinisterial;
+    private String funcaoEdb;
+
     private String telefone;
     private String produto;
     private int qtd;

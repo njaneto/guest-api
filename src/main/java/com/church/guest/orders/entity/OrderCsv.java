@@ -18,38 +18,50 @@ public class OrderCsv {
     private String nomeCompleto;
 
     @CsvBindByPosition(position = 2)
+    @CsvBindByName(column = "Congregacão")
+    private String congregacao;
+
+    @CsvBindByPosition(position = 3)
+    @CsvBindByName(column = "Carg_Ministerial")
+    private String cargoMinisterial;
+
+    @CsvBindByPosition(position = 4)
+    @CsvBindByName(column = "Funcão_EBD")
+    private String funcaoEdb;
+
+    @CsvBindByPosition(position = 5)
     @CsvBindByName(column = "Apelido")
     private String apelido;
 
-    @CsvBindByPosition(position = 3)
+    @CsvBindByPosition(position = 6)
     @CsvBindByName(column = "Telefone")
     private String telefone;
 
-    @CsvBindByPosition(position = 4)
+    @CsvBindByPosition(position = 7)
     @CsvBindByName(column = "Produto")
     private String produto;
 
-    @CsvBindByPosition(position = 5)
+    @CsvBindByPosition(position = 8)
     @CsvBindByName(column = "Valor")
     private Double valorUnitario;
 
-    @CsvBindByPosition(position = 6)
+    @CsvBindByPosition(position = 9)
     @CsvBindByName(column = "Qtd")
     private Integer qtd;
 
-    @CsvBindByPosition(position = 7)
+    @CsvBindByPosition(position = 10)
     @CsvBindByName(column = "Total")
     private Double valorTotal;
 
-    @CsvBindByPosition(position = 8)
-    @CsvBindByName(column = "pagamento")
+    @CsvBindByPosition(position = 11)
+    @CsvBindByName(column = "Pagamento")
     private String opcaoPagamento;
 
-    @CsvBindByPosition(position = 9)
+    @CsvBindByPosition(position = 12)
     @CsvBindByName(column = "Status")
     private String statusPagamento;
 
-    @CsvBindByPosition(position = 10)
+    @CsvBindByPosition(position = 13)
     @CsvBindByName(column = "Criado")
     private String createdDate;
 
