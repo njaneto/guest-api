@@ -39,14 +39,14 @@ public class OrdersController {
 
     @PostMapping( value = "/notify" )
     @ResponseStatus( value = HttpStatus.ACCEPTED )
-    @Secured( "CJ_ROLE_USER_WRITER" )
+    @Secured( "ORDER_ROLE_USER_WRITER" )
     public NotifyDTO notifyPendente() {
         return NotifyDTO.builder().message( service.notifyPendente() ).build();
     }
 
     @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
-    @Secured( "CJ_ROLE_USER_READ" )
+    @Secured( "ORDER_ROLE_USER_READ" )
     public OrdersResponse findAllOrders() {
 
         final List< OrderDTO > responses = service.findAll()
@@ -60,7 +60,7 @@ public class OrdersController {
 
     @GetMapping( value = "/{numeroPedido}/order", produces = MediaType.APPLICATION_JSON_VALUE )
     @ResponseStatus( value = HttpStatus.OK )
-    @Secured( "CJ_ROLE_USER_READ" )
+    @Secured( "ORDER_ROLE_USER_READ" )
     public OrdersResponse findAllOrdersByOrder(@PathVariable String numeroPedido) {
 
         final List< OrderDTO > responses = service.findAllByNumeroPedido(numeroPedido)
@@ -74,35 +74,35 @@ public class OrdersController {
 
     @PutMapping( value = "/{id}/confirm" )
     @ResponseStatus( value = HttpStatus.OK )
-    @Secured( "CJ_ROLE_USER_WRITER" )
+    @Secured( "ORDER_ROLE_USER_WRITER" )
     public OrderDTO confirm( @Valid @PathVariable( name = "id" ) String id ) {
         return OrdersMapper.toOrderDTO( service.confirm( id ) );
     }
 
     @PutMapping( value = "/{id}/delivery" )
     @ResponseStatus( value = HttpStatus.OK )
-    @Secured( "CJ_ROLE_USER_WRITER" )
+    @Secured( "ORDER_ROLE_USER_WRITER" )
     public OrderDTO delivery( @Valid @PathVariable( name = "id" ) String id ) {
         return OrdersMapper.toOrderDTO( service.delivery( id ) );
     }
 
     @PutMapping( value = "/{id}/cancel" )
     @ResponseStatus( value = HttpStatus.OK )
-    @Secured( "CJ_ROLE_USER_WRITER" )
+    @Secured( "ORDER_ROLE_USER_WRITER" )
     public OrderDTO cancel( @Valid @PathVariable( name = "id" ) String id ) {
         return OrdersMapper.toOrderDTO( service.cancel( id ) );
     }
 
     @PutMapping( value = "/{id}/pendent" )
     @ResponseStatus( value = HttpStatus.OK )
-    @Secured( "CJ_ROLE_USER_WRITER" )
+    @Secured( "ORDER_ROLE_USER_WRITER" )
     public OrderDTO pendent( @Valid @PathVariable( name = "id" ) String id ) {
         return OrdersMapper.toOrderDTO( service.pendent( id ) );
     }
 
     @DeleteMapping( value = "/{id}/delete")
     @ResponseStatus( value = HttpStatus.NO_CONTENT )
-    @Secured( "CJ_ROLE_USER_WRITER" )
+    @Secured( "ORDER_ROLE_USER_WRITER" )
     public void delete( @Valid @PathVariable( name = "id" ) String id ) {
         service.delete( id );
     }
@@ -110,7 +110,7 @@ public class OrdersController {
 
     @GetMapping( value = "/export", produces = "text/csv" )
     @ResponseStatus( value = HttpStatus.OK )
-    @Secured( "CJ_ROLE_USER_WRITER" )
+    @Secured( "ORDER_ROLE_USER_WRITER" )
     public void exportOrderToCsv( HttpServletResponse response ) {
 
         response.setHeader( HttpHeaders.CONTENT_DISPOSITION,
