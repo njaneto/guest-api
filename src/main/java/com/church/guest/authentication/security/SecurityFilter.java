@@ -1,7 +1,7 @@
 package com.church.guest.authentication.security;
 
 import ch.qos.logback.core.util.StringUtil;
-import com.church.guest.reception.service.AuthenticationService;
+import com.church.guest.authentication.service.AuthenticationService;
 import com.church.guest.authentication.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

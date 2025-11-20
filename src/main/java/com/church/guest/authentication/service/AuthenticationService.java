@@ -1,4 +1,4 @@
-package com.church.guest.reception.service;
+package com.church.guest.authentication.service;
 
 import com.church.guest.authentication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
