@@ -26,6 +26,8 @@ public class OrderCreateRequest {
     private String cargoMinisterial;
     private String funcaoEdb;
 
+    private String plenarias;
+
     @NotBlank
     private String telefone;
 

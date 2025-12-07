@@ -18,6 +18,7 @@ public class OrderDTO {
     private String congregacao;
     private String cargoMinisterial;
     private String funcaoEdb;
+    private String plenarias;
 
     private String apelido;
     private String email;

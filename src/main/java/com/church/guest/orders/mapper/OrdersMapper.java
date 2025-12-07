@@ -87,6 +87,7 @@ public class OrdersMapper {
                 .nomeCompleto( order.getNomeCompleto() )
                 .congregacao( order.getCongregacao() )
                 .funcaoEdb( order.getFuncaoEdb() )
+                .plenarias( order.getPlenarias() )
                 .cargoMinisterial( order.getCargoMinisterial() )
                 .apelido( order.getApelido() )
                 .telefone( order.getTelefone() )

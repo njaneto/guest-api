@@ -30,38 +30,42 @@ public class OrderCsv {
     private String funcaoEdb;
 
     @CsvBindByPosition(position = 5)
+    @CsvBindByName(column = "Plenarias")
+    private String plenarias;
+
+    @CsvBindByPosition(position = 6)
     @CsvBindByName(column = "Apelido")
     private String apelido;
 
-    @CsvBindByPosition(position = 6)
+    @CsvBindByPosition(position = 7)
     @CsvBindByName(column = "Telefone")
     private String telefone;
 
-    @CsvBindByPosition(position = 7)
+    @CsvBindByPosition(position = 8)
     @CsvBindByName(column = "Produto")
     private String produto;
 
-    @CsvBindByPosition(position = 8)
+    @CsvBindByPosition(position = 9)
     @CsvBindByName(column = "Valor")
     private Double valorUnitario;
 
-    @CsvBindByPosition(position = 9)
+    @CsvBindByPosition(position = 10)
     @CsvBindByName(column = "Qtd")
     private Integer qtd;
 
-    @CsvBindByPosition(position = 10)
+    @CsvBindByPosition(position = 11)
     @CsvBindByName(column = "Total")
     private Double valorTotal;
 
-    @CsvBindByPosition(position = 11)
+    @CsvBindByPosition(position = 12)
     @CsvBindByName(column = "Pagamento")
     private String opcaoPagamento;
 
-    @CsvBindByPosition(position = 12)
+    @CsvBindByPosition(position = 13)
     @CsvBindByName(column = "Status")
     private String statusPagamento;
 
-    @CsvBindByPosition(position = 13)
+    @CsvBindByPosition(position = 14)
     @CsvBindByName(column = "Criado")
     private String createdDate;
 

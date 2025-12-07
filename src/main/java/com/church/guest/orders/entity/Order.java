@@ -30,6 +30,7 @@ public class Order {
     private String congregacao;
     private String cargoMinisterial;
     private String funcaoEdb;
+    private String plenarias;
 
     private String telefone;
     private String produto;
