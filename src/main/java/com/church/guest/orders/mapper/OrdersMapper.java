@@ -41,6 +41,7 @@ public class OrdersMapper {
                 .nomeCompleto( order.getNomeCompleto() )
                 .cargoMinisterial( order.getCargoMinisterial() )
                 .funcaoEdb( order.getFuncaoEdb() )
+                .plenarias( order.getPlenarias() )
                 .congregacao( order.getCongregacao() )
                 .apelido( order.getApelido() )
                 .email( order.getEmail() )
@@ -72,6 +73,7 @@ public class OrdersMapper {
                 .valorTotal( request.getValorTotal() )
                 .congregacao( request.getCongregacao() )
                 .funcaoEdb( request.getFuncaoEdb() )
+                .plenarias( request.getPlenarias() )
                 .cargoMinisterial( request.getCargoMinisterial() )
                 .build();
     }
