@@ -30,4 +30,4 @@
 /target/
 
 ### local ###
-myFlywayConfig.properties
+application-local.yml
